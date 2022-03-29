@@ -25,7 +25,10 @@ import jwt
 
 
 
-
+severity_info    = 0   # green
+severity_feature = 1   # blue
+severity_problem = 2   # yellow
+severity_outage  = 3   # red
 
 
 
@@ -100,3 +103,10 @@ class User(UserMixin, db.Model):
         return '<User {}>'.format(self.username)
 
 
+class Message(db.Model):
+    __tablename__ = 'messages'
+    id = db.Column(db.Integer(), primary_key=True)
+    title = db.Column(db.String(200))
+    valid = db.Column(db.DateTime, default=datetime.utcnow)
+    severity = db.Column(db.Integer(), default=severity_info)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)

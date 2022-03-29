@@ -24,8 +24,7 @@ from flask_paginate import Pagination, get_page_parameter
 from app import db
 from app.main import bp
 from app.models import *
-from app.main.forms import WhitelistGroupForm, DeleteWhitelistGroupForm, \
-    AddUserForm, DeleteWhitelistUserForm
+from app.main.forms import AddMessageForm
 
 from app.auth.admin import admin_required
 
@@ -59,6 +58,27 @@ def index():
                             )
 
 
+@bp.route('/messages', methods=['GET'])
+@login_required
+def messages():
+    return render_template('main/messages.html',
+                            title='Messages'
+                           )
+
+
+@bp.route('/add_message', methods=['GET','POST'])
+@login_required
+def message_add():
+    form = AddMessageForm()
+
+    if form.validate_on_submit():
+        return redirect(url_for('main.messages'))
+
+    
+    return render_template('main/message_add.html',
+                           title='Add message',
+                           nform=form,
+                           )
 
 
 

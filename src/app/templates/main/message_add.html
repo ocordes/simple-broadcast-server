@@ -1,0 +1,87 @@
+{% extends "message_base.html" %}
+
+{% block styles %}
+{{super()}}
+
+<link rel="stylesheet" href="{{url_for('static', filename='bootstrap-datetimepicker.min.css')}}">
+
+{% endblock %}
+
+{% block app_content %}
+
+<div class="card">
+    <div class="card-header">
+        <h5>Add message</h5>
+    </div>
+    <div class="card-body">
+        <form id="usersform" class="form-horizontal mb-5" role="form" method="post" action="">
+            {{nform.hidden_tag()}}
+            {% if nform.title.errors|length > 0 %}
+            <div id="signupalert" class="alert alert-danger">
+                {% for error in nform.title.errors %}
+                <span>{{error}}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div class="input-group form-group row mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-comment"></i></span>
+                </div>
+                {{nform.title(id="title", class_="form-control", placeholder="message title" ) }}
+            </div>
+            {% if nform.valid.errors|length > 0 %}
+            <div id="signupalert" class="alert alert-danger">
+                {% for error in nform.valid.errors %}
+                <span>{{error}}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div class="input-group form-group row mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                </div>
+                {{nform.valid(id="valid", class_="datetime form-control" , placeholder="YYYY-MM-DD HH:MM") }}
+            </div>
+
+            <div class="input-group form-group row mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
+                </div>
+
+                <!--{{nform.severity(id="valid", class_="list-inline") }}-->
+                <div class="form-control list-inline">
+                {% for i in nform.severity %}
+                  {{i(class_="list-inline-item mt-2")}} {{i.label(class_="mt-2")}}
+                {% endfor%}
+                </div>
+            </div>
+
+            {{ nform.submit(class_="btn btn-primary") }}
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+{{super()}}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+<script src="{{url_for('static', filename='bootstrap-datetimepicker.min.js')}}"></script>
+
+<!-- 
+    https://www.jqueryscript.net/time-clock/Date-Time-Picker-Bootstrap-4.html
+-->
+<script>
+    $(function () {
+        $('#valid').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm'
+        });
+    });
+
+
+</script>
+
+{% endblock %}
