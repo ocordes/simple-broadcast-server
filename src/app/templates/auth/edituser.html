@@ -1,0 +1,89 @@
+{% extends "app_base.html" %}
+
+{% block app_content %}
+
+<div class="card">
+  <div class="card-header">
+    <h5>Edit user data</h5>
+  </div>
+  <div class="card-body">
+    <form id="usersform" class="form-horizontal" role="form" method="post" action="">
+      {{nform.hidden_tag()}}
+      <div class="input-group form-group">
+          <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+          </div>
+          <span class="input-group-text form-control">{{user.username}}</span>
+      </div>
+      {% if nform.first_name.errors|length > 0 %}
+      <div id="signupalert" class="alert alert-danger">
+        {% for error in nform.first_name.errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="input-group form-group">
+          <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+          </div>
+          {{nform.first_name(id="first_name", class_="form-control", placeholder="first name" ) }}
+      </div>
+      {% if nform.last_name.errors|length > 0 %}
+      <div id="signupalert" class="alert alert-danger">
+        {% for error in nform.last_name.errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="input-group form-group">
+          <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+          </div>
+          {{nform.last_name(id="last_name", class_="form-control", placeholder="last name" ) }}
+      </div>
+      {% if nform.email.errors|length > 0 %}
+      <div id="signupalert" class="alert alert-danger">
+        {% for error in nform.email.errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="input-group form-group">
+          <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-envelope-open"></i></span>
+          </div>
+          {{nform.email(id="email", class_="form-control", placeholder="email" ) }}
+      </div>
+      {% if nform.password.errors|length > 0 %}
+      <div id="signupalert" class="alert alert-danger">
+        {% for error in nform.password.errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="input-group form-group">
+          <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-unlock"></i></span>
+          </div>
+          {{nform.password(id="login-password",class_="form-control",placeholder="password")}}
+      </div>
+      {% if nform.password2.errors|length > 0 %}
+      <div id="signupalert" class="alert alert-danger">
+        {% for error in nform.password2.errors %}
+        <span>{{error}}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="input-group form-group">
+          <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-unlock"></i></span>
+          </div>
+          {{nform.password2(id="login-password2",class_="form-control",placeholder="Repeat password")}}
+      </div>
+      {{ nform.submit(class_="btn btn-primary") }}
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}
