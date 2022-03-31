@@ -2,19 +2,14 @@ name: Build
 
 on:
   push:
-    branches: main
+    branches: [main]
   pull_request:
-    branches: '*'
+    branches: ['*']
 
 
 jobs:
   build:
-    runs-on: [ubuntu-latest]
-#    container:
-#      image: docker://repo:tag
-#      env:
-#        T1: t1
-
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ['3.7', '3.8', '3.9', '3.10']
