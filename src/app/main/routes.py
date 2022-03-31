@@ -24,7 +24,7 @@ from flask_paginate import Pagination, get_page_parameter
 from app import db
 from app.main import bp
 from app.models import *
-from app.main.forms import AddMessageForm
+from app.main.forms import AddLabelForm, AddMessageForm
 
 from app.auth.admin import admin_required
 
@@ -61,6 +61,28 @@ def index():
                             server_users=server_users,
                                 title='Dashboard'
                             )
+
+
+@bp.route('/labels', methods=['GET'])
+@login_required
+def labels():
+    return render_template('main/labels.html',
+                            title='Labels'
+    )
+
+
+@bp.route('/add_label', methods=['GET', 'POST'])
+@login_required
+def label_add():
+    form = AddLabelForm()
+
+    if form.validate_on_submit():
+        return redirect(url_for('main.labels'))
+
+    return render_template('main/label_add.html',
+                           title='Add label',
+                           nform=form,
+                           )
 
 
 @bp.route('/messages', methods=['GET'])
