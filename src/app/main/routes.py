@@ -43,6 +43,11 @@ def before_request():
         db.session.commit()
 
 
+@bp.route('/ping', methods=['GET'])
+def ping():
+    return 'pong'
+
+
 @bp.route('/')
 @bp.route('/index')
 @login_required
