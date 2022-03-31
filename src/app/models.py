@@ -2,8 +2,8 @@
 
 app/models.py
 
-written by: Oliver Cordes 2021-02-12
-changed by: Oliver Cordes 2021-02-12
+written by: Oliver Cordes 2022-03-29
+changed by: Oliver Cordes 2022-03-31
 
 """
 
@@ -103,10 +103,19 @@ class User(UserMixin, db.Model):
         return '<User {}>'.format(self.username)
 
 
+class MessageLabel(db.Model):
+    __tablename__ = 'msglabels'
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(100))
+    hint = db.Column(db.String(200))
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+
 class Message(db.Model):
     __tablename__ = 'messages'
     id = db.Column(db.Integer(), primary_key=True)
     title = db.Column(db.String(200))
     valid = db.Column(db.DateTime, default=datetime.utcnow)
     severity = db.Column(db.Integer(), default=severity_info)
+    label = db.Column(db.Integer(), db.ForeignKey('msglabels.id', ondelete='CASCADE'))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)

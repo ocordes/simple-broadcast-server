@@ -3,7 +3,7 @@
 app/main/forms.py
 
 written by: Oliver Cordes 2022-03-29
-changed by: Oliver Cordes 2022-03-29
+changed by: Oliver Cordes 2022-03-31
 
 """
 
@@ -11,7 +11,7 @@ changed by: Oliver Cordes 2022-03-29
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, \
                     SubmitField, TextAreaField, SelectField, SelectMultipleField, \
-                    DateField, DateTimeField, RadioField
+                    DateField, DateTimeField, RadioField 
 #from wtforms_html5 import AutoAttrMeta
 
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
@@ -27,21 +27,6 @@ class MultiCheckboxField(SelectMultipleField):
     option_widget = widgets.CheckboxInput()
 
 
-class WhitelistGroupForm(FlaskForm):
-    groupname = StringField('Groupname', validators=[DataRequired()])
-    role      = SelectField(coerce=int)
-
-    submit = SubmitField('Add')
-
-    def validate_groupname(self, groupname):
-        group = WhitelistGroup.query.filter_by(groupname=groupname.data).first()
-        if group is not None:
-            raise ValidationError('Please use a different group name.')
-
-
-class DeleteWhitelistGroupForm(FlaskForm):
-    remove = SubmitField('Delete')
-
 
 class AddUserForm(FlaskForm):
     group = SelectField(coerce=int)
@@ -52,6 +37,13 @@ class DeleteWhitelistUserForm(FlaskForm):
     group = SelectField(coerce=int)
     select = SubmitField('Select')
     remove = SubmitField('Delete')
+
+
+class AddLabelForm(FlaskForm):
+    name = StringField('Name of label', validators=[DataRequired()])
+    hint = StringField('Description', validators=[DataRequired()])
+
+    submit = SubmitField('Submit')
 
 
 class AddMessageForm(FlaskForm):

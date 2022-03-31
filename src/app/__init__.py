@@ -24,8 +24,11 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 
 
+# need to define this before migrate
+flask_app = Flask(__name__)
+
 db = SQLAlchemy()
-migrate = Migrate()
+migrate = Migrate(flask_app, db, render_as_batch=True)
 login = LoginManager()
 login.login_view = 'auth.login'
 login.login_message = 'Please log in to access this page.'
@@ -41,8 +44,8 @@ toolbar = DebugToolbarExtension()
 
 
 def create_app(config_class=Config):
-
-    app = Flask(__name__)
+    #app = Flask(__name__)
+    app = flask_app
     #app = connexion.App(__name__, specification_dir='./api/')
     # Read the swagger.yml file to configure the endpoints
     #app.add_api('openapi.yaml')
