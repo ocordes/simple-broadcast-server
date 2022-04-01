@@ -25,10 +25,27 @@ import jwt
 
 
 
-severity_info    = 0   # green
-severity_feature = 1   # blue
-severity_problem = 2   # yellow
-severity_outage  = 3   # red
+severity_info    = 1   # green
+severity_feature = 2   # blue
+severity_problem = 3   # yellow
+severity_outage  = 4   # red
+
+
+severities = {
+            0 : 'Unknown',
+            1 : 'Information',
+            2 : 'Update',
+            3 : 'Problem',
+            4 : 'Outage',
+}
+
+sev_colors = {
+            0 : '#ffffff',
+            1 : '#99ff99',
+            2 : '#afffff',
+            3 : '#eaffaf',
+            4 : '#ff9999'
+}
 
 
 
@@ -119,3 +136,10 @@ class Message(db.Model):
     severity = db.Column(db.Integer(), default=severity_info)
     label = db.Column(db.Integer(), db.ForeignKey('msglabels.id', ondelete='CASCADE'))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+    def get_severity_name(self):
+        return severities[self.severity]
+
+    def get_sev_color(self):
+        return sev_colors[self.severity]

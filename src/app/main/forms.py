@@ -3,11 +3,12 @@
 app/main/forms.py
 
 written by: Oliver Cordes 2022-03-29
-changed by: Oliver Cordes 2022-03-31
+changed by: Oliver Cordes 2022-04-01
 
 """
 
 
+from ast import Sub
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, \
                     SubmitField, TextAreaField, SelectField, SelectMultipleField, \
@@ -15,7 +16,7 @@ from wtforms import StringField, PasswordField, BooleanField, \
 #from wtforms_html5 import AutoAttrMeta
 
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
-from app.models import User
+from app.models import User, severities
 
 from wtforms import widgets, SelectMultipleField
 
@@ -46,14 +47,20 @@ class AddLabelForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
+class DeleteLabelForm(FlaskForm):
+    remove = SubmitField('Delete')
+
+
 class AddMessageForm(FlaskForm):
     #class Meta(AutoAttrMeta):
     #    pass
     title = StringField('Message title', validators=[DataRequired()])
     valid = DateTimeField('Starting date/time', format='%Y-%m-%d %H:%M')
     severity = RadioField(
-        'Label', choices=[(1, 'Information'), (2, 'Feature'), (3,'Problem'), (4, 'Outage')], 
+        #'Severity', choices=[(1, 'Information'), (2, 'Feature'), (3,'Problem'), (4, 'Outage')], 
+        'Severity', choices=[(1, severities[1]), (2, severities[2]), (3, severities[3]), (4, severities[4])], 
         coerce=int, default=1, validators=[DataRequired()])
+    label = SelectField(coerce=int)
     submit = SubmitField('Submit')
 
 
@@ -64,3 +71,7 @@ class AddMessageForm(FlaskForm):
         timediff = (valid.data - datetime.datetime.now()).total_seconds()
         if timediff <= 0:
             raise ValidationError('Date/Time must be in the future!')
+
+
+class DeleteMessageForm(FlaskForm):
+    remove = SubmitField('Delete')

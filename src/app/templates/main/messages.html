@@ -8,4 +8,41 @@
 
 {% block app_content %}
 
+<div class="card">
+    <div class="card-header">
+        <h5>List of available messages</h5>
+    </div>
+    <div class="card-body">
+        <form id="rolesformdelete" class="form-horizontal mb-5" role="form" method="post" action="">
+            {{dform.hidden_tag()}}
+            <div class="table-responsive col-6">
+                <table class="table table-bordered">
+                    <thead>
+                        <td></td>
+                        <td>ID</td>
+                        <td>Title</td>
+                        <td>Severity</td>
+                        <td>Time stamp</td>
+                    </thead>
+                    {% for msg in messages %}
+                    <tr>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="remove_group" value="{{msg.id}}">
+                            </label>
+                        </td>
+                        <td>{{msg.id}}</td>
+                        <td>{{msg.title}}</td>
+                        <!-- <td style="background-color: #eaffaf;" >{{msg.get_severity_name()}}</td>-->
+                        <td style="background-color: {{msg.get_sev_color()}}">{{msg.get_severity_name()}}</td>
+                        <td>{{msg.timestamp.strftime('%Y-%m-%d %H:%M:%S')}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {{ dform.remove(onclick="return (ask_for_deletion())", class_="btn btn-danger") }}
+        </form>
+    </div>
+</div>
+
 {% endblock %}
