@@ -4,8 +4,8 @@
 app/main/routes.py
 ~~~~~~~~~~~~~~~~~~
 
-written by : Oliver Cordes 2021-02-12
-changed by : Oliver Cordes 2021-02-24
+written by : Oliver Cordes 2022-03-29
+changed by : Oliver Cordes 2022-04-01
 
 """
 
@@ -24,7 +24,7 @@ from flask_paginate import Pagination, get_page_parameter
 from app import db
 from app.main import bp
 from app.models import *
-from app.main.forms import AddLabelForm, AddMessageForm
+from app.main.forms import AddLabelForm, DeleteLabelForm, AddMessageForm, DeleteMessageForm
 
 from app.auth.admin import admin_required
 
@@ -63,10 +63,27 @@ def index():
                             )
 
 
-@bp.route('/labels', methods=['GET'])
+@bp.route('/labels', methods=['GET', 'POST'])
 @login_required
-def labels():
+def show_labels():
+    dform = DeleteLabelForm()
+
+    if dform.validate_on_submit():
+        print('remove pressed')
+        selected_labels = request.form.getlist("remove_group")
+        print(selected_labels)
+
+        for id in selected_labels:
+            label = MessageLabel.query.get(int(id))
+            print(label)
+            db.session.delete(label)
+            db.session.commit()
+
+    labels = MessageLabel.query.all()
+
     return render_template('main/labels.html',
+                            labels=labels,
+                            dform=dform,
                             title='Labels'
     )
 
@@ -77,7 +94,11 @@ def label_add():
     form = AddLabelForm()
 
     if form.validate_on_submit():
-        return redirect(url_for('main.labels'))
+        label = MessageLabel(name=form.name.data, hint=form.hint.data)
+        db.session.add(label)
+        db.session.commit()
+
+        return redirect(url_for('main.show_labels'))
 
     return render_template('main/label_add.html',
                            title='Add label',
@@ -87,9 +108,19 @@ def label_add():
 
 @bp.route('/messages', methods=['GET'])
 @login_required
-def messages():
+def show_messages():
+
+    dform = DeleteMessageForm()
+
+    if dform.validate_on_submit():
+        print('remove pressed')
+
+    messages = Message.query.all()
+
     return render_template('main/messages.html',
-                            title='Messages'
+                            title='Messages',
+                            dform=dform,
+                            messages=messages
                            )
 
 
@@ -98,8 +129,20 @@ def messages():
 def message_add():
     form = AddMessageForm()
 
+    labels = MessageLabel.query.all()
+    form.label.choices = [(l.id, l.name) for l in labels]
+
     if form.validate_on_submit():
-        return redirect(url_for('main.messages'))
+
+        msg = Message(title=form.title.data)
+        msg.valid = form.valid.data
+        msg.severity = form.severity.data
+        msg.label = form.label.data
+
+        db.session.add(msg)
+        db.session.commit()
+
+        return redirect(url_for('main.show_messages'))
 
     
     return render_template('main/message_add.html',

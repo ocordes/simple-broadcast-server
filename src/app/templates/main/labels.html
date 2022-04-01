@@ -8,4 +8,41 @@
 
 {% block app_content %}
 
+<div class="card">
+    <div class="card-header">
+        <h5>List of available labels</h5>
+    </div>
+    <div class="card-body">
+        <form id="rolesformdelete" class="form-horizontal mb-5" role="form" method="post" action="">
+            {{dform.hidden_tag()}}
+            <div class="table-responsive col-6">
+                <table class="table table-bordered">
+                    <thead>
+                        <td></td>
+                        <td>ID</td>
+                        <td>Name</td>
+                        <td>Description</td>
+                        <td>Time stamp</td>
+                    </thead>
+                    {% for label in labels %}
+                    <tr>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="remove_group" value="{{label.id}}">
+                            </label>
+                        </td>
+                        <td>{{label.id}}</td>
+                        <td>{{label.name}}</td>
+                        <td>{{label.hint}}</td>
+                        <td>{{label.timestamp.strftime('%Y-%m-%d %H:%M:%S')}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {{ dform.remove(onclick="return (ask_for_deletion())", class_="btn btn-danger") }}
+        </form>
+    </div>
+</div>
+
+
 {% endblock %}
