@@ -15,14 +15,17 @@
     <div class="card-body">
         <form id="rolesformdelete" class="form-horizontal mb-5" role="form" method="post" action="">
             {{dform.hidden_tag()}}
-            <div class="table-responsive col-6">
-                <table class="table table-bordered">
+            <div class="table-responsive">
+                {{ pagination.links }}
+                <table class="table table-sm table-bordered">
                     <thead>
                         <td></td>
                         <td>ID</td>
                         <td>Title</td>
+                        <td>Due in</td>
+                        <td>Due</td>
                         <td>Severity</td>
-                        <td>Time stamp</td>
+                        <td>Created</td>
                     </thead>
                     {% for msg in messages %}
                     <tr>
@@ -33,12 +36,16 @@
                         </td>
                         <td>{{msg.id}}</td>
                         <td>{{msg.title}}</td>
+                        <td style="background-color: {{msg.get_days_color()}}">{{msg.get_days()}}</td>
+                        <td>{{msg.valid}}</td>
                         <!-- <td style="background-color: #eaffaf;" >{{msg.get_severity_name()}}</td>-->
                         <td style="background-color: {{msg.get_sev_color()}}">{{msg.get_severity_name()}}</td>
                         <td>{{msg.timestamp.strftime('%Y-%m-%d %H:%M:%S')}}</td>
                     </tr>
                     {% endfor %}
                 </table>
+                {{ pagination.info }}
+                {{ pagination.links }}
             </div>
             {{ dform.remove(onclick="return (ask_for_deletion())", class_="btn btn-danger") }}
         </form>

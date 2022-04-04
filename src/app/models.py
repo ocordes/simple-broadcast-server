@@ -143,3 +143,29 @@ class Message(db.Model):
 
     def get_sev_color(self):
         return sev_colors[self.severity]
+
+    def get_days(self):
+        delta = (self.valid-datetime.now()).total_seconds()
+
+        sign = delta < 0 and '-' or ''
+
+        delta = abs(delta)
+        days, delta = divmod(delta,86400)
+        hours, delta = divmod(delta, 3600)
+        mins, seconds = divmod(delta, 60)
+
+        return f'{sign}{int(days)} days, {int(hours):02d}:{int(mins):02d}:{int(seconds):02d} hours'
+
+    def get_days_color(self):
+        delta = (self.valid-datetime.now()).total_seconds()
+
+        if delta < 0:
+            return 'red'
+
+        if delta < 86400:
+            return '#fab778'
+
+        if delta < 86400*7:
+            return '#eaffaf'
+
+        return 'white'
