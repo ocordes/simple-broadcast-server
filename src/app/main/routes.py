@@ -5,7 +5,7 @@ app/main/routes.py
 ~~~~~~~~~~~~~~~~~~
 
 written by : Oliver Cordes 2022-03-29
-changed by : Oliver Cordes 2022-04-01
+changed by : Oliver Cordes 2022-04-04
 
 """
 
@@ -106,20 +106,49 @@ def label_add():
                            )
 
 
-@bp.route('/messages', methods=['GET'])
+@bp.route('/messages', methods=['GET', 'POST'])
 @login_required
 def show_messages():
+    # analyse the request
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+    page     = request.args.get(get_page_parameter(), type=int, default=1)
+
+    print('page:', page)
 
     dform = DeleteMessageForm()
 
     if dform.validate_on_submit():
         print('remove pressed')
+        # get a list of selected items
+        selected_messages = request.form.getlist("remove_group")
+        print(selected_messages)
 
-    messages = Message.query.all()
+        for id in selected_messages:
+            msg = Message.query.get(int(id))
+            db.session.delete(msg)
+            db.session.commit()
+
+        return redirect(url_for('main.show_messages'))
+
+    max_messages = Message.query.count()
+
+    pagination = Pagination(page=page, total=max_messages,
+                            per_page=10,
+                            css_framework='bootstrap4',
+                            href=url_for('main.show_messages') +
+                            '?page={}',
+                            display_msg='(Displaying <b>{start}-{end}</b> of <b>{total}</b> Messages)',
+                            search=search, record_name='whitelist_users')
+
+    messages = Message.query.order_by(Message.valid).paginate(page, pagination.per_page, error_out=False).items
 
     return render_template('main/messages.html',
                             title='Messages',
                             dform=dform,
+                            pagination=pagination,
                             messages=messages
                            )
 
