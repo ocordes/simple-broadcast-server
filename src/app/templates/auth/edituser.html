@@ -9,11 +9,9 @@
   <div class="card-body">
     <form id="usersform" class="form-horizontal" role="form" method="post" action="">
       {{nform.hidden_tag()}}
-      <div class="input-group form-group">
-          <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
-          </div>
-          <span class="input-group-text form-control">{{user.username}}</span>
+      <div class="form-floating mb-2">
+        <span class="input-group-text form-control" id="username">{{user.username}}</span>
+        <label for="username">Username</label>
       </div>
       {% if nform.first_name.errors|length > 0 %}
       <div id="signupalert" class="alert alert-danger">
@@ -22,11 +20,9 @@
         {% endfor %}
       </div>
       {% endif %}
-      <div class="input-group form-group">
-          <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-user"></i></span>
-          </div>
-          {{nform.first_name(id="first_name", class_="form-control", placeholder="first name" ) }}
+      <div class="form-floating mb-2">
+        {{nform.first_name(id="first_name", class_="form-control", placeholder="first name" ) }}
+        <label for="first_name">First name</label>
       </div>
       {% if nform.last_name.errors|length > 0 %}
       <div id="signupalert" class="alert alert-danger">

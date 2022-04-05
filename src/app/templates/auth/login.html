@@ -6,26 +6,23 @@
 
 <div class="container">
 	<div id="loginbox"
-		class="card col-md-7 col-sm-8 mt-5">
+		class="card col-md-8 col-sm-10 mt-5">
 		<div class="card-header">
 			Sign In
 		</div>
 		<div class="card-body">
 			<form id="loginform" class="form-horizontal" role="form" method="post" action="{{url_for('auth.login')}}" novalidate>
 				{{ form.hidden_tag() }}
-				<div class="row mb-1">
-					<div class="input-group">
-						<div class="input-group-text"><i class="fas fa-user"></i></span></div>
-						{{form.username(id="login-username", class_="form-control", placeholder="username or email" ) }}
-					</div>
+				<div class="form-floating mb-1">
+					{{form.username(id="login-username", class_="form-control", placeholder="username or email" ) }}
+					<label for="floatingInput">Username or email address</label>
 				</div>
-				<div class="row mb-1">
-					<div class="input-group">
-						<div class="input-group-text"><i class="fas fa-key"></i></div>
-						{{form.password(id="login-password",class_="form-control",placeholder="password")}}
-					</div>
+				<div class="form-floating mb-3">
+					{{form.password(id="login-password",class_="form-control",placeholder="password")}}
+					<label for="login-password">Password</label>
 				</div>
-				<div class="row mb-1">
+				
+				<div class="row mb-3">
 					<div class="input-group">
 						<!--<div class="col-form-label col-sm-2"></div>-->
 						<div class="form-check">
