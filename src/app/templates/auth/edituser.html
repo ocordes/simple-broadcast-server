@@ -31,11 +31,9 @@
         {% endfor %}
       </div>
       {% endif %}
-      <div class="input-group form-group">
-          <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-user"></i></span>
-          </div>
-          {{nform.last_name(id="last_name", class_="form-control", placeholder="last name" ) }}
+      <div class="form-floating mb-2">
+        {{nform.last_name(id="last_name", class_="form-control", placeholder="last name" ) }}
+        <label for="last_name">Last name</label>
       </div>
       {% if nform.email.errors|length > 0 %}
       <div id="signupalert" class="alert alert-danger">
@@ -44,42 +42,74 @@
         {% endfor %}
       </div>
       {% endif %}
-      <div class="input-group form-group">
-          <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-envelope-open"></i></span>
+      <div class="form-floating mb-2">
+        {{nform.email(id="email", class_="form-control", placeholder="email" ) }}
+        <label for="email">Email</label>
+      </div>
+      
+
+      <div class="input-group mb-2">
+        <div class="form-floating flex-grow-1">
+          {{nform.password(id="new-password",class_="form-control", placeholder="new password")}}
+          <label for="new-password">New password</label>
           </div>
-          {{nform.email(id="email", class_="form-control", placeholder="email" ) }}
+          <span class="input-group-text"><i id="password-eye" class="fas fa-eye-slash" 
+              onclick="toggleEye('password-eye', 'new-password')" ></i></span>
       </div>
-      {% if nform.password.errors|length > 0 %}
-      <div id="signupalert" class="alert alert-danger">
-        {% for error in nform.password.errors %}
-        <span>{{error}}</span>
-        {% endfor %}
-      </div>
-      {% endif %}
-      <div class="input-group form-group">
-          <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-unlock"></i></span>
-          </div>
-          {{nform.password(id="login-password",class_="form-control",placeholder="password")}}
-      </div>
-      {% if nform.password2.errors|length > 0 %}
-      <div id="signupalert" class="alert alert-danger">
-        {% for error in nform.password2.errors %}
-        <span>{{error}}</span>
-        {% endfor %}
-      </div>
-      {% endif %}
-      <div class="input-group form-group">
-          <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-unlock"></i></span>
-          </div>
-          {{nform.password2(id="login-password2",class_="form-control",placeholder="Repeat password")}}
+      
+      <div class="input-group mb-2">
+        <div class="form-floating flex-grow-1">
+          {% if nform.password2.errors|length > 0 %}
+          {{nform.password2(id="login-password2",class_="form-control is-invalid",placeholder="password")}}
+          <label for="login-password2">
+            {% for error in nform.password2.errors %}
+              {{error}}
+           {% endfor %}
+         </label>
+          {% else %}
+         {{nform.password2(id="login-password2",class_="form-control",placeholder="password")}}
+         <label for="login-password2">Repeated password</label>
+         {% endif %}
+        </div>
+        <span class="input-group-text"><i id="password-eye2" class="fas fa-eye-slash"
+            onclick="toggleEye('password-eye2', 'login-password2')"></i></span>
       </div>
       {{ nform.submit(class_="btn btn-primary") }}
     </form>
   </div>
 </div>
 
+
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+
+<script>
+
+  function toggleClass(x, c1, c2) {
+      if (x.classList.contains(c1)){
+        x.classList.replace(c1, c2);
+      } else {
+        x.classList.replace(c2, c1);
+      }
+
+    }
+
+  function toggleEye(label_id, id) {
+      var label = document.getElementById(label_id);
+
+      toggleClass(label, "fa-eye", "fa-eye-slash");
+  
+      var el = document.getElementById(id);
+      if (el.type === "password") {
+        el.type = "text";
+      } else {
+        el.type = "password";
+      }
+    }
+
+
+</script>
 
 {% endblock %}
