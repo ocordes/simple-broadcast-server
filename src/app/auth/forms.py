@@ -3,14 +3,21 @@
 app/auth/forms.py
 
 written by: Oliver Cordes 2022-03-29
-changed by: Oliver Cordes 2021-03-29
+changed by: Oliver Cordes 2021-04-07
 
 """
 
+"""
+chromium autocomplete:
+
+https://developers.google.com/web/updates/2015/06/checkout-faster-with-autofill
+
+"""
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, \
                     SubmitField, TextAreaField, SelectField, SelectMultipleField
+from wtforms.widgets import PasswordInput
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from app.models import User
 
@@ -23,7 +30,8 @@ class MultiCheckboxField(SelectMultipleField):
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()], render_kw={"autocomplete": "current-password"},
+)
     remember_me = BooleanField('Remember me')
     submit = SubmitField('Login')
 
@@ -52,12 +60,11 @@ class NewUserForm(FlaskForm):
 
 
 class EditUserForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired(), Email()], render_kw={"autocomplete": "email"})
     first_name = StringField('First name', validators=[DataRequired()])
     last_name = StringField('Last name', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[])
-    password2 = PasswordField(
-        'Repeat Password', validators=[EqualTo('password')])
+    password = StringField('New password', widget=PasswordInput(hide_value=False), validators=[], render_kw={"autocomplete": "new-password"},)
+    password2 = StringField('Repeated password', widget=PasswordInput(hide_value=False), validators=[EqualTo('password')])
     submit = SubmitField('Update')
 
 

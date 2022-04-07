@@ -85,6 +85,7 @@ def login():
                 flash(msg)
                 current_app.logger.info(msg)
                 return redirect(url_for('auth.login'))
+        
         return render_template('auth/login.html', title='Sign In',
                                 form=form )
 

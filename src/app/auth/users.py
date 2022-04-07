@@ -98,6 +98,9 @@ def user(username):
         form.email.data = user.email
         form.password.data = ''
         form.password2.data = ''
+    else:
+        print('hugo')
+        print(form.password.data)
 
 
     return render_template('auth/edituser.html',
