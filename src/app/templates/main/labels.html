@@ -8,6 +8,8 @@
 
 {% block app_content %}
 
+{% from 'bootstrap5/utils.html' import render_icon %}
+
 <div class="card">
     <div class="card-header">
         <h5>List of available labels</h5>
@@ -23,6 +25,7 @@
                         <td>Name</td>
                         <td>Description</td>
                         <td>Time stamp</td>
+                        <td></td>
                     </thead>
                     {% for label in labels %}
                     <tr>
@@ -35,6 +38,17 @@
                         <td>{{label.name}}</td>
                         <td>{{label.hint}}</td>
                         <td>{{label.timestamp.strftime('%Y-%m-%d %H:%M:%S')}}</td>
+                        <td>
+                            <a class="action-icon text-decoration-none"
+                                href="{{url_for('main.label_edit', id=label.id)}}">
+
+                            {{ render_icon('pencil-fill') }}
+                            </a>
+                            <a class="action-icon text-decoration-none" href="{{url_for('main.label_delete', id=label.id)}}">
+                            
+                                {{ render_icon('trash-fill') }}
+                            </a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </table>
