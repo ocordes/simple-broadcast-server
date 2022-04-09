@@ -2,8 +2,8 @@
 
 app/auth/routes.py
 
-written by: Oliver Cordes 2021-02-17
-changed by: Oliver Cordes 2021-02-17
+written by: Oliver Cordes 2022-03-29
+changed by: Oliver Cordes 2021-04-09
 
 """
 

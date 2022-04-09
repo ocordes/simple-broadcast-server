@@ -5,7 +5,7 @@ app/main/routes.py
 ~~~~~~~~~~~~~~~~~~
 
 written by : Oliver Cordes 2022-03-29
-changed by : Oliver Cordes 2022-04-04
+changed by : Oliver Cordes 2022-04-09
 
 """
 
@@ -104,6 +104,19 @@ def label_add():
                            title='Add label',
                            nform=form,
                            )
+
+
+@bp.route('/label/<id>/edit')
+@login_required
+def label_edit(id):
+    return redirect(url_for('main.show_labels'))
+
+
+@bp.route('/label/<id>/delete')
+@login_required
+def label_delete(id):
+    return redirect(url_for('main.show_labels'))
+
 
 
 @bp.route('/messages', methods=['GET', 'POST'])
