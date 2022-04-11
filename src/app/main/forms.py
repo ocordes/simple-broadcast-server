@@ -3,7 +3,7 @@
 app/main/forms.py
 
 written by: Oliver Cordes 2022-03-29
-changed by: Oliver Cordes 2022-04-01
+changed by: Oliver Cordes 2022-04-11
 
 """
 
@@ -45,6 +45,14 @@ class AddLabelForm(FlaskForm):
     hint = StringField('Description', validators=[DataRequired()])
 
     submit = SubmitField('Submit')
+
+
+class EditLabelForm(FlaskForm):
+    name = StringField('Name of label', validators=[DataRequired()])
+    hint = StringField('Description', validators=[DataRequired()])
+
+    submit = SubmitField('Update')
+
 
 
 class DeleteLabelForm(FlaskForm):

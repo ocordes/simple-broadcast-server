@@ -5,7 +5,7 @@ app/main/routes.py
 ~~~~~~~~~~~~~~~~~~
 
 written by : Oliver Cordes 2022-03-29
-changed by : Oliver Cordes 2022-04-09
+changed by : Oliver Cordes 2022-04-11
 
 """
 
@@ -24,7 +24,7 @@ from flask_paginate import Pagination, get_page_parameter
 from app import db
 from app.main import bp
 from app.models import *
-from app.main.forms import AddLabelForm, DeleteLabelForm, AddMessageForm, DeleteMessageForm
+from app.main.forms import AddLabelForm, EditLabelForm, DeleteLabelForm, AddMessageForm, DeleteMessageForm
 
 from app.auth.admin import admin_required
 
@@ -88,7 +88,7 @@ def show_labels():
     )
 
 
-@bp.route('/add_label', methods=['GET', 'POST'])
+@bp.route('/label/add', methods=['GET', 'POST'])
 @login_required
 def label_add():
     form = AddLabelForm()
@@ -106,10 +106,32 @@ def label_add():
                            )
 
 
-@bp.route('/label/<id>/edit')
+@bp.route('/label/<id>/edit', methods=['GET', 'POST'])
 @login_required
 def label_edit(id):
-    return redirect(url_for('main.show_labels'))
+
+    form = EditLabelForm()
+
+    label = MessageLabel.query.get(int(id)) 
+
+    if form.validate_on_submit():
+        label.name = form.name.data
+        label.hint = form.hint.data
+
+        print(form.name.data)
+        print(form.hint.data)
+        print(label.hint)
+        db.session.commit()
+
+        return redirect(url_for('main.show_labels'))
+    elif request.method == 'GET':
+        form.name.data = label.name
+        form.hint.data = label.hint
+
+    return render_template('main/label_edit.html',
+                            title='Edit label',
+                            nform=form
+                            )
 
 
 @bp.route('/label/<id>/delete')
@@ -166,7 +188,7 @@ def show_messages():
                            )
 
 
-@bp.route('/add_message', methods=['GET','POST'])
+@bp.route('/message/add', methods=['GET','POST'])
 @login_required
 def message_add():
     form = AddMessageForm()
@@ -194,5 +216,14 @@ def message_add():
 
 
 
+@bp.route('/message/<id>/edit')
+@login_required
+def message_edit(id):
+    return redirect(url_for('main.show_messages'))
 
+
+@bp.route('/message/<id>/delete')
+@login_required
+def message_delete(id):
+    return redirect(url_for('main.show_messages'))
 
