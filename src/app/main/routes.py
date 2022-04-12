@@ -5,7 +5,7 @@ app/main/routes.py
 ~~~~~~~~~~~~~~~~~~
 
 written by : Oliver Cordes 2022-03-29
-changed by : Oliver Cordes 2022-04-11
+changed by : Oliver Cordes 2022-04-12
 
 """
 
@@ -24,7 +24,8 @@ from flask_paginate import Pagination, get_page_parameter
 from app import db
 from app.main import bp
 from app.models import *
-from app.main.forms import AddLabelForm, EditLabelForm, DeleteLabelForm, AddMessageForm, DeleteMessageForm
+from app.main.forms import AddLabelForm, EditLabelForm, DeleteLabelForm, \
+        AddMessageForm, EditMessageForm, DeleteMessageForm
 
 from app.auth.admin import admin_required
 
@@ -100,8 +101,9 @@ def label_add():
 
         return redirect(url_for('main.show_labels'))
 
-    return render_template('main/label_add.html',
+    return render_template('main/label_edit.html',
                            title='Add label',
+                           edit=False,
                            nform=form,
                            )
 
@@ -117,10 +119,6 @@ def label_edit(id):
     if form.validate_on_submit():
         label.name = form.name.data
         label.hint = form.hint.data
-
-        print(form.name.data)
-        print(form.hint.data)
-        print(label.hint)
         db.session.commit()
 
         return redirect(url_for('main.show_labels'))
@@ -130,6 +128,7 @@ def label_edit(id):
 
     return render_template('main/label_edit.html',
                             title='Edit label',
+                            edit=True,
                             nform=form
                             )
 
@@ -209,8 +208,9 @@ def message_add():
         return redirect(url_for('main.show_messages'))
 
     
-    return render_template('main/message_add.html',
+    return render_template('main/message_edit.html',
                            title='Add message',
+                           edit=False,
                            nform=form,
                            )
 
@@ -219,7 +219,27 @@ def message_add():
 @bp.route('/message/<id>/edit')
 @login_required
 def message_edit(id):
-    return redirect(url_for('main.show_messages'))
+    form = EditMessageForm()
+
+    labels = MessageLabel.query.all()
+    form.label.choices = [(l.id, l.name) for l in labels]
+
+    msg = Message.query.get(int(id))
+
+    if form.validate_on_submit():
+
+        return redirect(url_for('main.show_messages'))
+
+    form.title.data    = msg.title
+    form.valid.data    = msg.valid
+    form.severity.data = msg.severity
+    form.label.data    = msg.label
+    
+    return render_template('main/message_edit.html',
+                           title='Edit message',
+                           edit=True,
+                           nform=form,
+                           )
 
 
 @bp.route('/message/<id>/delete')

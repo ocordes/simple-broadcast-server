@@ -3,7 +3,7 @@
 app/main/forms.py
 
 written by: Oliver Cordes 2022-03-29
-changed by: Oliver Cordes 2022-04-11
+changed by: Oliver Cordes 2022-04-12
 
 """
 
@@ -79,6 +79,28 @@ class AddMessageForm(FlaskForm):
         timediff = (valid.data - datetime.datetime.now()).total_seconds()
         if timediff <= 0:
             raise ValidationError('Date/Time must be in the future!')
+
+
+
+class EditMessageForm(FlaskForm):
+    title = StringField('Message title', validators=[DataRequired()])
+    valid = DateTimeField('Starting date/time', format='%Y-%m-%d %H:%M')
+    severity = RadioField(
+        #'Severity', choices=[(1, 'Information'), (2, 'Feature'), (3,'Problem'), (4, 'Outage')], 
+        'Severity', choices=[(1, severities[1]), (2, severities[2]), (3, severities[3]), (4, severities[4])], 
+        coerce=int, default=1, validators=[DataRequired()])
+    label = SelectField(coerce=int)
+    submit = SubmitField('Update')
+
+
+    def validate_valid(self, valid):
+        if valid.data is None:
+            raise ValidationError('Date/Time is not in this format: YYYY-MM-DD HH:MM')
+        
+        timediff = (valid.data - datetime.datetime.now()).total_seconds()
+        if timediff <= 0:
+            raise ValidationError('Date/Time must be in the future!')
+
 
 
 class DeleteMessageForm(FlaskForm):
