@@ -8,6 +8,8 @@
 
 {% block app_content %}
 
+{% from 'bootstrap5/utils.html' import render_icon %}
+
 <div class="card">
     <div class="card-header">
         <h5>List of available messages</h5>
@@ -26,6 +28,7 @@
                         <td>Due</td>
                         <td>Severity</td>
                         <td>Created</td>
+                        <td></td>
                     </thead>
                     {% for msg in messages %}
                     <tr>
@@ -41,6 +44,16 @@
                         <!-- <td style="background-color: #eaffaf;" >{{msg.get_severity_name()}}</td>-->
                         <td style="background-color: {{msg.get_sev_color()}}">{{msg.get_severity_name()}}</td>
                         <td>{{msg.timestamp.strftime('%Y-%m-%d %H:%M:%S')}}</td>
+                        <td>
+                            <a class="action-icon text-decoration-none" href="{{url_for('main.message_edit', id=msg.id)}}">
+                        
+                                {{ render_icon('pencil-fill') }}
+                            </a>
+                            <a class="action-icon text-decoration-none" href="{{url_for('main.message_delete', id=msg.id)}}">
+                        
+                                {{ render_icon('trash-fill') }}
+                            </a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </table>

@@ -11,37 +11,54 @@
 
 <div class="card">
     <div class="card-header">
-        <h5>Add message</h5>
+        {% if edit %}
+        <h5>Edit a message</h5>
+        {% else %}
+        <h5>Add a message</h5>
+        {% endif %}
     </div>
     <div class="card-body">
         <form id="usersform" class="form-horizontal mb-5" role="form" method="post" action="">
             {{nform.hidden_tag()}}
-            {% if nform.title.errors|length > 0 %}
-            <div id="signupalert" class="alert alert-danger">
-                {% for error in nform.title.errors %}
-                <span>{{error}}</span>
-                {% endfor %}
-            </div>
-            {% endif %}
-            <div class="input-group form-group row mb-2">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-comment"></i></span>
+
+            <div class="input-group mb-2">
+                <div class="form-floating flex-grow-1">
+                    {% if nform.title.errors|length > 0 %}
+                    {{nform.title(id="title", class_="form-control is-invalid", placeholder="message title" ) }}
+                    <label for="title">
+                        {% for error in nform.title.errors %}
+                        {{error}}
+                        {% endfor %}
+                    </label>
+                    {% else %}
+                    {{nform.title(id="title", class_="form-control", placeholder="message title" ) }}
+                    <label for="title">
+                        Message title
+                    </label>
+                    {% endif %}
                 </div>
-                {{nform.title(id="title", class_="form-control", placeholder="message title" ) }}
             </div>
-            {% if nform.valid.errors|length > 0 %}
-            <div id="signupalert" class="alert alert-danger">
-                {% for error in nform.valid.errors %}
-                <span>{{error}}</span>
-                {% endfor %}
-            </div>
-            {% endif %}
-            <div class="input-group form-group row mb-2">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+
+
+            <div class="input-group mb-2">
+                <div class="form-floating flex-grow-1">
+                    {% if nform.valid.errors|length > 0 %}
+                    {{nform.valid(id="valid", class_="datetime form-control is-invalid" , placeholder="YYYY-MM-DD HH:MM") }}
+                    <label for="valid">
+                        {% for error in nform.title.errors %}
+                        {{error}}
+                        {% endfor %}
+                    </label>
+                    {% else %}
+                    {{nform.valid(id="valid", class_="datetime form-control" , placeholder="YYYY-MM-DD HH:MM") }}
+                    <label for="valid">
+                        Valid date
+                    </label>
+                    {% endif %}
                 </div>
-                {{nform.valid(id="valid", class_="datetime form-control" , placeholder="YYYY-MM-DD HH:MM") }}
             </div>
+            
+    
 
             <div class="input-group form-group row mb-2">
                 <div class="input-group-prepend">
@@ -75,6 +92,8 @@
 {% block scripts %}
 {{super()}}
 
+{# need to load jquery #}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
 <script src="{{url_for('static', filename='bootstrap-datetimepicker.min.js')}}"></script>
 
