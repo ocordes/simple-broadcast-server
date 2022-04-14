@@ -15,7 +15,7 @@ from wtforms import StringField, PasswordField, BooleanField, \
                     DateField, DateTimeField, RadioField 
 #from wtforms_html5 import AutoAttrMeta
 
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
+from wtforms.validators import ValidationError, DataRequired, Optional, Email, EqualTo, Length
 from app.models import User, severities
 
 from wtforms import widgets, SelectMultipleField
@@ -69,6 +69,8 @@ class AddMessageForm(FlaskForm):
         'Severity', choices=[(1, severities[1]), (2, severities[2]), (3, severities[3]), (4, severities[4])], 
         coerce=int, default=1, validators=[DataRequired()])
     label = SelectField(coerce=int)
+    send_email = BooleanField('Send email to ...', default=False)
+    email_body = TextAreaField('Email body', validators=[Optional(), Length(max=200)])
     submit = SubmitField('Submit')
 
 
@@ -90,6 +92,8 @@ class EditMessageForm(FlaskForm):
         'Severity', choices=[(1, severities[1]), (2, severities[2]), (3, severities[3]), (4, severities[4])], 
         coerce=int, default=1, validators=[DataRequired()])
     label = SelectField(coerce=int)
+    send_email = BooleanField('Send email to ...', default=False)
+    email_body = TextAreaField('Email body', validators=[Optional(), Length(max=200)])
     submit = SubmitField('Update')
 
 

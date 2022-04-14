@@ -27,6 +27,7 @@
                         <td>Due in</td>
                         <td>Due</td>
                         <td>Severity</td>
+                        <td>Label</td>
                         <td>Created</td>
                         <td></td>
                     </thead>
@@ -43,14 +44,15 @@
                         <td>{{msg.valid}}</td>
                         <!-- <td style="background-color: #eaffaf;" >{{msg.get_severity_name()}}</td>-->
                         <td style="background-color: {{msg.get_sev_color()}}">{{msg.get_severity_name()}}</td>
+                        <td>{{msg.get_label_name()}}</td>
                         <td>{{msg.timestamp.strftime('%Y-%m-%d %H:%M:%S')}}</td>
                         <td>
                             <a class="action-icon text-decoration-none" href="{{url_for('main.message_edit', id=msg.id)}}">
-                        
                                 {{ render_icon('pencil-fill') }}
                             </a>
-                            <a class="action-icon text-decoration-none" href="{{url_for('main.message_delete', id=msg.id)}}">
-                        
+                            <a class="action-icon text-decoration-none" 
+                                href="{{url_for('main.message_delete', id=msg.id)}}" 
+                                onclick="return (ask_for_deletion_item('{{msg.title}}'))">
                                 {{ render_icon('trash-fill') }}
                             </a>
                         </td>

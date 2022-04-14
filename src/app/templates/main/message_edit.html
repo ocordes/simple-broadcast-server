@@ -18,7 +18,7 @@
         {% endif %}
     </div>
     <div class="card-body">
-        <form id="usersform" class="form-horizontal mb-5" role="form" method="post" action="">
+        <form id="usersform" class="form-horizontal mb-2" role="form" method="post" action="">
             {{nform.hidden_tag()}}
 
             <div class="input-group mb-2">
@@ -45,7 +45,7 @@
                     {% if nform.valid.errors|length > 0 %}
                     {{nform.valid(id="valid", class_="datetime form-control is-invalid" , placeholder="YYYY-MM-DD HH:MM") }}
                     <label for="valid">
-                        {% for error in nform.title.errors %}
+                        {% for error in nform.valid.errors %}
                         {{error}}
                         {% endfor %}
                     </label>
@@ -58,26 +58,39 @@
                 </div>
             </div>
             
-    
-
-            <div class="input-group form-group row mb-2">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
-                </div>
-
-                <!--{{nform.severity(id="valid", class_="list-inline") }}-->
-                <div class="form-control list-inline">
-                {% for i in nform.severity %}
-                  {{i(class_="list-inline-item mt-2")}} {{i.label(class_="mt-2")}}
-                {% endfor%}
+            <div class="input-group mb-2">
+                <div class="form-floating flex-grow-1">
+                    <div class="form-control">
+                        {% for i in nform.severity %}
+                        <div class="form-check form-check-inline">
+                            {{i(class_="form-check-input")}} {{i.label(class_="form-check-label")}}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <!--{{nform.severity(id="severity", class_="form-control") }}-->
+                    <label for="severity">Severity</label>
                 </div>
             </div>
 
-            <div class="input-group form-group row mb-2">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
-                </div>
-                {{nform.label(id="label", class_="form-control")}}
+            <div class="input-group mb-2">
+                <div class="form-floating flex-grow-1">
+                    {{nform.label(id="label", class_="form-select", aria_label=".form-select-lg example")}}
+                    <label for="label">Label</label>
+                 </div>
+            </div>
+
+            <div class="form-check form-switch">
+                {{nform.send_email(id="send_email", class_="form-check-input", onclick="toggleEmail()")}}
+                <label class="form-check-label" for="send_email">Send email to ... </label>
+            </div>
+
+            <div id="email_block" style="display: none;">
+                <div class="input-group mb-2">
+                    <div class="form-floating flex-grow-1">
+                        {{nform.email_body(id="email-body", class_="form-control", style="height: 500px")}}
+                        <label for="email-body">Email text</label>
+                    </div>
+                 </div>
             </div>
 
             {{ nform.submit(class_="btn btn-primary") }}
@@ -101,12 +114,27 @@
     https://www.jqueryscript.net/time-clock/Date-Time-Picker-Bootstrap-4.html
 -->
 <script>
+
+    var send_emails = false;
+
     $(function () {
         $('#valid').datetimepicker({
             format: 'YYYY-MM-DD HH:mm'
         });
     });
 
+    function toggleEmail() {
+        var el = document.getElementById("email_block");
+
+        send_emails = !send_emails;
+
+        if (send_emails) {
+            el.style.display = "block";
+        }
+        else {
+            el.style.display = "none";
+        }
+    };
 
 </script>
 
