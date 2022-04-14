@@ -5,7 +5,7 @@ app/main/routes.py
 ~~~~~~~~~~~~~~~~~~
 
 written by : Oliver Cordes 2022-03-29
-changed by : Oliver Cordes 2022-04-12
+changed by : Oliver Cordes 2022-04-14
 
 """
 
@@ -150,9 +150,8 @@ def show_messages():
         search = True
     page     = request.args.get(get_page_parameter(), type=int, default=1)
 
-    print('page:', page)
-
     dform = DeleteMessageForm()
+    labels = MessageLabel.query.all()
 
     if dform.validate_on_submit():
         print('remove pressed')
@@ -183,7 +182,8 @@ def show_messages():
                             title='Messages',
                             dform=dform,
                             pagination=pagination,
-                            messages=messages
+                            messages=messages,
+                            labels=labels
                            )
 
 
@@ -215,8 +215,7 @@ def message_add():
                            )
 
 
-
-@bp.route('/message/<id>/edit')
+@bp.route('/message/<id>/edit', methods=['GET','POST'])
 @login_required
 def message_edit(id):
     form = EditMessageForm()
@@ -227,13 +226,23 @@ def message_edit(id):
     msg = Message.query.get(int(id))
 
     if form.validate_on_submit():
+        msg.title = form.title.data 
+        msg.valid = form.valid.data
+        msg.severity = form.severity.data
+        msg.label = form.label.data
+        msg.send_email = form.send_email.data
+        msg.email_body = form.email_body.data
+        
+        db.session.commit()
 
         return redirect(url_for('main.show_messages'))
 
-    form.title.data    = msg.title
-    form.valid.data    = msg.valid
-    form.severity.data = msg.severity
-    form.label.data    = msg.label
+    form.title.data      = msg.title
+    form.valid.data      = msg.valid
+    form.severity.data   = msg.severity
+    form.label.data      = msg.label
+    form.send_email.data = msg.send_email
+    form.email_body.data = msg.email_body
     
     return render_template('main/message_edit.html',
                            title='Edit message',
@@ -245,5 +254,10 @@ def message_edit(id):
 @bp.route('/message/<id>/delete')
 @login_required
 def message_delete(id):
+    msg = Message.query.get(int(id))
+
+    db.session.delete(msg)
+    db.session.commit()
+
     return redirect(url_for('main.show_messages'))
 

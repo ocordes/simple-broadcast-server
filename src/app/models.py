@@ -135,6 +135,8 @@ class Message(db.Model):
     valid = db.Column(db.DateTime, default=datetime.utcnow)
     severity = db.Column(db.Integer(), default=severity_info)
     label = db.Column(db.Integer(), db.ForeignKey('msglabels.id', ondelete='CASCADE'))
+    send_email = db.Column(db.Boolean(), default=False)
+    email_body = db.Column(db.String(5000))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 
@@ -169,3 +171,9 @@ class Message(db.Model):
             return '#eaffaf'
 
         return 'white'
+
+
+    def get_label_name(self):
+        label = MessageLabel.query.get(self.label)
+
+        return label.name
