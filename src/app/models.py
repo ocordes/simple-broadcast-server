@@ -120,6 +120,15 @@ class User(UserMixin, db.Model):
         return '<User {}>'.format(self.username)
 
 
+class EmailAddress(db.Model):
+    __tablename__ = 'emailaddress'
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(100))
+    emails = db.Column(db.String(200))
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+
 class MessageLabel(db.Model):
     __tablename__ = 'msglabels'
     id = db.Column(db.Integer(), primary_key=True)

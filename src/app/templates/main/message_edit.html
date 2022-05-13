@@ -84,7 +84,11 @@
                 <label class="form-check-label" for="send_email">Send email to ... </label>
             </div>
 
+            {% if nform.send_email.data == 1 %}
+            <div id="email_block" style="display: block;">
+            {% else %}
             <div id="email_block" style="display: none;">
+            {% endif %}
                 <div class="input-group mb-2">
                     <div class="form-floating flex-grow-1">
                         {{nform.email_body(id="email-body", class_="form-control", style="height: 500px")}}
@@ -114,8 +118,12 @@
     https://www.jqueryscript.net/time-clock/Date-Time-Picker-Bootstrap-4.html
 -->
 <script>
-
+    {% if nform.send_email.data == 1 %}
+    var send_emails = true;
+    {% else %}
     var send_emails = false;
+    {% endif %}
+
 
     $(function () {
         $('#valid').datetimepicker({
