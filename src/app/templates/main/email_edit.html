@@ -1,0 +1,49 @@
+{% extends "email_base.html" %}
+
+
+{% block app_content %}
+
+<div class="card">
+    <div class="card-header">
+        {% if edit %}
+        <h5>Edit an email group</h5>
+        {% else %}
+        <h5>Add an email group</h5>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        <form id="labelform" class="form-horizontal mb-2" role="form" method="post" action="">
+            {{nform.hidden_tag()}}
+            <div class="form-floating mb-2">
+                {% if nform.name.errors|length > 0 %}
+                {{nform.name(id="name", class_="form-control is-invalid", placeholder="{{nform.name.label}}" ) }}
+                <label for="name">
+                    {% for error in nform.name.errors %}
+                    {{error}}
+                    {% endfor %}
+                </label>
+                {% else %}
+                {{nform.name(id="name", class_="form-control", placeholder="{{nform.name.label}}" ) }}
+                <label for="name">{{nform.name.label}}</label>
+                {% endif %}
+            </div>
+            <div class="form-floating mb-2">
+                {% if nform.email.errors|length >0 %}
+                {{nform.email(id="email", class_="form-control is-invalid", placeholder="{{nform.email.label}}" ) }}
+                <label for="email">
+                    {% for error in nform.email.errors %}
+                    {{error}}
+                    {% endfor %}
+                </label>
+                {% else %}
+                {{nform.email(id="email", class_="form-control", placeholder="{{nform.email.label}}" ) }}
+                <label for="email">{{nform.email.label}}</label>
+                {% endif %}
+            </div>
+            {{ nform.submit(class_="btn btn-primary") }}
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

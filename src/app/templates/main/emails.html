@@ -1,0 +1,64 @@
+{% extends "email_base.html" %}
+
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('static', filename='pagination.css')}}">
+{% endblock %}
+
+{% block app_content %}
+
+{% from 'bootstrap5/utils.html' import render_icon %}
+
+<div class="card">
+    <div class="card-header">
+        <h5>List of available email groups</h5>
+    </div>
+    <div class="card-body">
+        <form id="rolesformdelete" class="form-horizontal mb-5" role="form" method="post" action="">
+            {{dform.hidden_tag()}}
+            <div class="table-responsive col-6">
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <td></td>
+                        <td>ID</td>
+                        <td>Group name</td>
+                        <td>Email address</td>
+                        <td>Time stamp</td>
+                        <td></td>
+                    </thead>
+                    {% for email_address in email_addresses %}
+                    <tr>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="remove_group" value="{{email_address.id}}">
+                            </label>
+                        </td>
+                        <td>{{email_address.id}}</td>
+                        <td>{{email_address.name}}</td>
+                        <td>{{email_address.emails}}</td>
+                        <td>{{email_address.timestamp.strftime('%Y-%m-%d %H:%M:%S')}}</td>
+                        <td>
+                            <a class="action-icon text-decoration-none"
+                                href="{{url_for('main.email_edit', id=email_address.id)}}">
+
+                            {{ render_icon('pencil-fill') }}
+                            </a>
+                            <a class="action-icon text-decoration-none" 
+                                href="{{url_for('main.email_delete', id=email_address.id)}}"
+                                onclick="return (ask_for_deletion())">
+                            
+                                {{ render_icon('trash-fill') }}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {{ dform.remove(onclick="return (ask_for_deletion())", class_="btn btn-danger") }}
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

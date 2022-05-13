@@ -48,15 +48,21 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/labels">
+                <a class="nav-link" href="{{url_for('main.show_labels')}}">
                   <span data-feather="tag"></span>
                   Labels
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/messages">
+                <a class="nav-link" href="{{url_for('main.show_messages')}}">
                   <span data-feather="message-circle"></span>
                   Messages
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('main.show_emails')}}">
+                  <span data-feather="message-circle"></span>
+                  Email groups
                 </a>
               </li>
               <!---
