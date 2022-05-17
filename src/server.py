@@ -9,16 +9,18 @@ changed by: Oliver Cordes 2022-03-29
 """
 
 __author__    = 'Oliver Cordes'
-__version__   = '0.0.1'
-__copyright__ = f'2022 bv {__author__}'
+__version__   = '0.0.2'
+__copyright__ = f'2022 by {__author__}'
 
 
 # used for the cli extension
 import click
 from flask.cli import AppGroup
 
+from flask import g, request
+
 # the defaults for the APP
-from app import create_app, db
+from app import create_app, db, babel
 from app.models import User #, WhitelistUser, WhitelistGroup
 
 import logging
@@ -60,6 +62,27 @@ def utility_processor():
     return { 'app_version': __version__,
              'app_copyright': __copyright__,
              'app_name': app.config['APP_NAME']}
+
+
+
+"""
+babel configurations
+
+"""
+
+@babel.localeselector
+def get_locale():
+    if not g.get('lang_code', None):
+        g.lang_code = request.accept_languages.best_match(app.config['LANGUAGES'])
+    print(g.lang_code)
+    return g.lang_code
+
+
+@babel.timezoneselector
+def get_timezone():
+    user = getattr(g, 'user', None)
+    if user is not None:
+        return user.timezone
 
 
 # test this file

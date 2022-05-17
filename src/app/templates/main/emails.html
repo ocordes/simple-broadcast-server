@@ -1,4 +1,4 @@
-{% extends "label_base.html" %}
+{% extends "email_base.html" %}
 
 
 {% block styles %}
@@ -12,39 +12,41 @@
 
 <div class="card">
     <div class="card-header">
-        <h5>List of available labels</h5>
+        <h5>List of available email groups</h5>
     </div>
     <div class="card-body">
         <form id="rolesformdelete" class="form-horizontal mb-5" role="form" method="post" action="">
             {{dform.hidden_tag()}}
             <div class="table-responsive col-lg-9 col-sm-12">
-                <table class="table  table-sm table-bordered">
+                <table class="table table-sm table-bordered">
                     <thead>
                         <td></td>
                         <td>ID</td>
-                        <td>Name</td>
-                        <td>Description</td>
+                        <td>Group name</td>
+                        <td>Email address</td>
                         <td>Time stamp</td>
                         <td></td>
                     </thead>
-                    {% for label in labels %}
+                    {% for email_address in email_addresses %}
                     <tr>
                         <td>
                             <label>
-                                <input type="checkbox" name="remove_group" value="{{label.id}}">
+                                <input type="checkbox" name="remove_group" value="{{email_address.id}}">
                             </label>
                         </td>
-                        <td>{{label.id}}</td>
-                        <td>{{label.name}}</td>
-                        <td>{{label.hint}}</td>
-                        <td>{{label.timestamp.strftime('%Y-%m-%d %H:%M:%S')}}</td>
+                        <td>{{email_address.id}}</td>
+                        <td>{{email_address.name}}</td>
+                        <td>{{email_address.emails}}</td>
+                        <td>{{email_address.timestamp.strftime('%Y-%m-%d %H:%M:%S')}}</td>
                         <td>
                             <a class="action-icon text-decoration-none"
-                                href="{{url_for('main.label_edit', id=label.id)}}">
+                                href="{{url_for('main.email_edit', id=email_address.id)}}">
 
                             {{ render_icon('pencil-fill') }}
                             </a>
-                            <a class="action-icon text-decoration-none" href="{{url_for('main.label_delete', id=label.id)}}">
+                            <a class="action-icon text-decoration-none" 
+                                href="{{url_for('main.email_delete', id=email_address.id)}}"
+                                onclick="return (ask_for_deletion())">
                             
                                 {{ render_icon('trash-fill') }}
                             </a>

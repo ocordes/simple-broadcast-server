@@ -3,7 +3,7 @@
 config.py
 
 written by: Oliver Cordes 2022-03-29
-changed by: Oliver Cordes 2022-03-29
+changed by: Oliver Cordes 2022-05-13
 
 """
 
@@ -33,3 +33,5 @@ class Config(object):
     # debug toolbar configs
     DEBUG = os.environ.get('APP_DEBUG') == 'True'
     DEBUG_TB_INTERCEPT_REDIRECTS = False
+
+    LANGUAGES = ['en', 'de']

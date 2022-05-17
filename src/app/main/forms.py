@@ -109,3 +109,47 @@ class EditMessageForm(FlaskForm):
 
 class DeleteMessageForm(FlaskForm):
     remove = SubmitField('Delete')
+
+
+# ------------------------------------------------------------
+#
+# email part
+
+# helper class to mimik individual data fields
+class _Emailfield(object):
+    def __init__(self, data,gettext):
+        self.data = data
+        self.gettext = gettext
+
+
+# wrapper around the email normal validator
+class MultipleEmails(object):
+    def __init__(self, delimiter=','):
+        self._delimiter = delimiter
+
+
+    def __call__(self, form, field):
+        email_validator = Email()
+
+        emails = field.data.split(self._delimiter)
+        for email in emails:
+            email_validator(form, _Emailfield(email,field.gettext))
+    
+
+
+class AddEmailForm(FlaskForm):
+    name = StringField('Name of email group', validators=[DataRequired()])
+    email = StringField('Email address', validators=[DataRequired(), MultipleEmails()])
+
+    submit = SubmitField('Submit')
+
+
+class EditEmailForm(FlaskForm):
+    name = StringField('Name of email group', validators=[DataRequired()])
+    email = StringField('Email address', validators=[DataRequired(), MultipleEmails()])
+
+    submit = SubmitField('Update')
+
+
+class DeleteEmailForm(FlaskForm):
+    remove = SubmitField('Delete')

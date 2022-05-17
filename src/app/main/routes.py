@@ -5,7 +5,7 @@ app/main/routes.py
 ~~~~~~~~~~~~~~~~~~
 
 written by : Oliver Cordes 2022-03-29
-changed by : Oliver Cordes 2022-04-14
+changed by : Oliver Cordes 2022-05-13
 
 """
 
@@ -14,9 +14,10 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import *
 import pkg_resources
 
-from flask import current_app, request, render_template, url_for, flash,  \
+from flask import current_app, g, request, render_template, url_for, flash,  \
     redirect, send_from_directory, jsonify, session, make_response
 from flask_login import current_user, login_user, logout_user, login_required
+from flask_babel import _, refresh
 from werkzeug.urls import url_parse, url_unparse
 
 from flask_paginate import Pagination, get_page_parameter
@@ -64,6 +65,9 @@ def index():
                             )
 
 
+
+
+
 @bp.route('/labels', methods=['GET', 'POST'])
 @login_required
 def show_labels():
@@ -94,6 +98,10 @@ def show_labels():
 def label_add():
     form = AddLabelForm()
 
+    #g.lang_code = 'en'
+    g.lang_code = None
+    refresh()
+
     if form.validate_on_submit():
         label = MessageLabel(name=form.name.data, hint=form.hint.data)
         db.session.add(label)
@@ -102,7 +110,7 @@ def label_add():
         return redirect(url_for('main.show_labels'))
 
     return render_template('main/label_edit.html',
-                           title='Add label',
+                           title=_('Add label'),
                            edit=False,
                            nform=form,
                            )
