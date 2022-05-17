@@ -131,3 +131,4 @@ src/data/app.db
 
 src/logs/*
 logs/*
+src/babel.cfg.orig

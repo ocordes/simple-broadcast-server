@@ -3,7 +3,7 @@
 app/models.py
 
 written by: Oliver Cordes 2022-03-29
-changed by: Oliver Cordes 2022-03-31
+changed by: Oliver Cordes 2022-05-17
 
 """
 

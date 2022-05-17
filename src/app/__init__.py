@@ -16,6 +16,7 @@ from config import Config
 
 from flask import Flask
 from flask_bootstrap import Bootstrap5
+from flask_babel import Babel
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -35,7 +36,7 @@ login.login_message = 'Please log in to access this page.'
 mail = Mail()
 bootstrap = Bootstrap5()
 #moment = Moment()
-#babel = Babel()
+babel = Babel()
 toolbar = DebugToolbarExtension()
 
 
@@ -61,7 +62,7 @@ def create_app(config_class=Config):
     mail.init_app(app)
     bootstrap.init_app(app)
     #moment.init_app(app.app)
-    #babel.init_app(app.app)
+    babel.init_app(app)
 
     toolbar.init_app(app)
 
