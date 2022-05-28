@@ -50,6 +50,16 @@ def ping():
     return 'pong'
 
 
+"""
+language selector
+"""
+@bp.route('/lang/<id>', methods=['GET'])
+@login_required
+def set_language(id):
+    session['language'] = id
+    return redirect(request.referrer)
+
+
 @bp.route('/')
 @bp.route('/index')
 @login_required
@@ -97,10 +107,6 @@ def show_labels():
 @login_required
 def label_add():
     form = AddLabelForm()
-
-    #g.lang_code = 'en'
-    g.lang_code = None
-    refresh()
 
     if form.validate_on_submit():
         label = MessageLabel(name=form.name.data, hint=form.hint.data)

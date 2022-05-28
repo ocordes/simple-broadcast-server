@@ -4,7 +4,7 @@
 server.py
 
 written by: Oliver Cordes 2022-03-29
-changed by: Oliver Cordes 2022-03-29
+changed by: Oliver Cordes 2022-05-28
 
 """
 
@@ -17,7 +17,7 @@ __copyright__ = f'2022 by {__author__}'
 import click
 from flask.cli import AppGroup
 
-from flask import g, request
+from flask import g, request, session
 
 # the defaults for the APP
 from app import create_app, db, babel
@@ -61,7 +61,10 @@ current app status is used!
 def utility_processor():
     return { 'app_version': __version__,
              'app_copyright': __copyright__,
-             'app_name': app.config['APP_NAME']}
+             'app_name': app.config['APP_NAME'],
+             'languages': app.config['LANGUAGES'],
+             'flags': app.config['FLAGS'],
+             'cur_lang': session.get('language', 'en')}
 
 
 
@@ -72,10 +75,9 @@ babel configurations
 
 @babel.localeselector
 def get_locale():
-    if not g.get('lang_code', None):
-        g.lang_code = request.accept_languages.best_match(app.config['LANGUAGES'])
-    print(g.lang_code)
-    return g.lang_code
+    if request.args.get('language'):
+        session['language'] = request.args.get('language')
+    return session.get('language', 'en')
 
 
 @babel.timezoneselector

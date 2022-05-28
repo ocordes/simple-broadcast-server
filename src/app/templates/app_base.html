@@ -32,6 +32,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mainnavbar">
+      {#
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
@@ -47,18 +48,20 @@
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success me-2" type="submit">Search</button>
       </form>
+      #}
     </div>
 
 
     <div class="dropdown">
       <a class="btn  dropdown-toggle" href="#" role="button" id="dropdownLang" data-bs-toggle="dropdown"
         aria-expanded="false">
-        Languages
+        {# Languages #}  
+        <span class="fi fi-{{flags[cur_lang]}}"></span>
       </a>
       <ul class="dropdown-menu" aria-labelledby="dropdownLang">
-        <li><a class="dropdown-item" href="#"><span class="fi fi-us"></span> English</a></li>
-        <li><a class="dropdown-item" href="#"><span class="fi fi-de"></span> Deutsch</a></li>
-        <li><a class="dropdown-item" href="#"><span class="fi fi-fr"></span> Français</a></li>
+        {% for key, value in languages.items() %}
+        <li><a class="dropdown-item" href="{{url_for('main.set_language', id=key)}}""><span class="fi fi-{{flags[key]}}"></span> {{value}}</a></li>
+        {% endfor %}
       </ul>
     </div>
 
