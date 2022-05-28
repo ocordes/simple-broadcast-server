@@ -84,13 +84,10 @@ def show_labels():
     dform = DeleteLabelForm()
 
     if dform.validate_on_submit():
-        print('remove pressed')
         selected_labels = request.form.getlist("remove_group")
-        print(selected_labels)
 
         for id in selected_labels:
             label = MessageLabel.query.get(int(id))
-            print(label)
             db.session.delete(label)
             db.session.commit()
 
@@ -141,7 +138,7 @@ def label_edit(id):
         form.hint.data = label.hint
 
     return render_template('main/label_edit.html',
-                            title='Edit label',
+                            title=_('Edit label'),
                             edit=True,
                             nform=form
                             )
