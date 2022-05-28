@@ -34,4 +34,12 @@ class Config(object):
     DEBUG = os.environ.get('APP_DEBUG') == 'True'
     DEBUG_TB_INTERCEPT_REDIRECTS = False
 
-    LANGUAGES = ['en', 'de']
+    FLAGS = {'en' : 'gb',
+             'de' : 'de',
+             'fr' : 'fr',
+             'us' : 'us',
+    }
+    LANGUAGES = {'en' : 'English',
+                 'de' : 'Deutsch',
+    #             'fr' : 'Français',
+    }

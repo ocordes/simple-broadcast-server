@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-05-13 15:07+0200\n"
+"POT-Creation-Date: 2022-05-28 16:14+0200\n"
 "PO-Revision-Date: 2022-05-13 15:07+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,7 +18,39 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
 
-#: app/main/routes.py:109
+#: app/main/routes.py:116 app/templates/main/label_edit.html:17
 msgid "Add label"
-msgstr "Erzeuge ein Label"
+msgstr "Erzeuge eine Markierung"
+
+#: app/main/routes.py:141 app/templates/main/label_edit.html:15
+msgid "Edit label"
+msgstr "Bearbeite eine Markierung"
+
+#: app/templates/app_base.html:111
+msgid "Labels"
+msgstr "Markierungen"
+
+#: app/templates/app_base.html:117
+msgid "Messages"
+msgstr "Nachrichten"
+
+#: app/templates/app_base.html:123
+msgid "Email groups"
+msgstr "Email-Gruppen"
+
+#: app/templates/app_base.html:128
+msgid "Administration"
+msgstr "Verwaltung"
+
+#: app/templates/app_base.html:136
+msgid "Users"
+msgstr "Benutzer"
+
+#: app/templates/app_base.html:141
+msgid "User"
+msgstr "Benutzer"
+
+#: app/templates/app_base.html:149
+msgid "Preferences"
+msgstr "Einstellungen"
 

@@ -50,6 +50,16 @@ def ping():
     return 'pong'
 
 
+"""
+language selector
+"""
+@bp.route('/lang/<id>', methods=['GET'])
+@login_required
+def set_language(id):
+    session['language'] = id
+    return redirect(request.referrer)
+
+
 @bp.route('/')
 @bp.route('/index')
 @login_required
@@ -74,13 +84,10 @@ def show_labels():
     dform = DeleteLabelForm()
 
     if dform.validate_on_submit():
-        print('remove pressed')
         selected_labels = request.form.getlist("remove_group")
-        print(selected_labels)
 
         for id in selected_labels:
             label = MessageLabel.query.get(int(id))
-            print(label)
             db.session.delete(label)
             db.session.commit()
 
@@ -97,10 +104,6 @@ def show_labels():
 @login_required
 def label_add():
     form = AddLabelForm()
-
-    #g.lang_code = 'en'
-    g.lang_code = None
-    refresh()
 
     if form.validate_on_submit():
         label = MessageLabel(name=form.name.data, hint=form.hint.data)
@@ -135,7 +138,7 @@ def label_edit(id):
         form.hint.data = label.hint
 
     return render_template('main/label_edit.html',
-                            title='Edit label',
+                            title=_('Edit label'),
                             edit=True,
                             nform=form
                             )
