@@ -12,7 +12,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h5>List of available labels</h5>
+        <h5>{{_('List of available labels')}}</h5>
     </div>
     <div class="card-body">
         <form id="rolesformdelete" class="form-horizontal mb-5" role="form" method="post" action="">
@@ -23,8 +23,8 @@
                         <td></td>
                         <td>ID</td>
                         <td>Name</td>
-                        <td>Description</td>
-                        <td>Time stamp</td>
+                        <td>{{_('Description')}}</td>
+                        <td>{{_('Created')}}</td>
                         <td></td>
                     </thead>
                     {% for label in labels %}

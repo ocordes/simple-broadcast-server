@@ -93,7 +93,8 @@ if __name__ == "__main__":
     #socketio.run(app,
             host='0.0.0.0',
             port=4555,
-            debug=True
+            debug=True,
+            extra_files=['./app/translations/de/LC_MESSAGES/messages.mo'],
             #extra_files=['./app/api/openapi.yaml']
             )
     #app.run(port=4555)

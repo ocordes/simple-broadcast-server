@@ -3,7 +3,7 @@
 app/main/forms.py
 
 written by: Oliver Cordes 2022-03-29
-changed by: Oliver Cordes 2022-04-12
+changed by: Oliver Cordes 2022-05-29
 
 """
 
@@ -20,6 +20,8 @@ from app.models import User, severities
 
 from wtforms import widgets, SelectMultipleField
 
+from flask_babel import lazy_gettext as _
+
 import datetime
 
 
@@ -28,87 +30,72 @@ class MultiCheckboxField(SelectMultipleField):
     option_widget = widgets.CheckboxInput()
 
 
-
-class AddUserForm(FlaskForm):
-    group = SelectField(coerce=int)
-    users = TextAreaField(u'User IDs')
-    submit = SubmitField('Add')
-    
-class DeleteWhitelistUserForm(FlaskForm):
-    group = SelectField(coerce=int)
-    select = SubmitField('Select')
-    remove = SubmitField('Delete')
-
-
 class AddLabelForm(FlaskForm):
-    name = StringField('Name of label', validators=[DataRequired()])
-    hint = StringField('Description', validators=[DataRequired()])
+    name = StringField(_('Name'), validators=[DataRequired()])
+    hint = StringField(_('Description'), validators=[DataRequired()])
 
-    submit = SubmitField('Submit')
+    submit = SubmitField(_('Submit'))
 
 
 class EditLabelForm(FlaskForm):
-    name = StringField('Name of label', validators=[DataRequired()])
-    hint = StringField('Description', validators=[DataRequired()])
+    name = StringField(_('Name'), validators=[DataRequired()])
+    hint = StringField(_('Description'), validators=[DataRequired()])
 
-    submit = SubmitField('Update')
-
+    submit = SubmitField(_('Update'))
 
 
 class DeleteLabelForm(FlaskForm):
-    remove = SubmitField('Delete')
+    remove = SubmitField(_('Delete'))
 
 
 class AddMessageForm(FlaskForm):
-    #class Meta(AutoAttrMeta):
-    #    pass
-    title = StringField('Message title', validators=[DataRequired()])
-    valid = DateTimeField('Starting date/time', format='%Y-%m-%d %H:%M')
+    title = StringField(_('Message title'), validators=[DataRequired()])
+    valid = DateTimeField(_('Starting date/time'), format='%Y-%m-%d %H:%M')
     severity = RadioField(
         #'Severity', choices=[(1, 'Information'), (2, 'Feature'), (3,'Problem'), (4, 'Outage')], 
-        'Severity', choices=[(1, severities[1]), (2, severities[2]), (3, severities[3]), (4, severities[4])], 
+        _('Severity'), choices=[(1, severities[1]), (2, severities[2]), (3, severities[3]), (4, severities[4])], 
         coerce=int, default=1, validators=[DataRequired()])
     label = SelectField(coerce=int)
-    send_email = BooleanField('Send email to ...', default=False)
-    email_body = TextAreaField('Email body', validators=[Optional(), Length(max=200)])
-    submit = SubmitField('Submit')
+    send_email = BooleanField(_('Send email to ...'), default=False)
+    email_body = TextAreaField(_('Email body'), validators=[Optional(), Length(max=200)])
+    submit = SubmitField(_('Submit'))
 
 
     def validate_valid(self, valid):
         if valid.data is None:
-            raise ValidationError('Date/Time is not in this format: YYYY-MM-DD HH:MM')
+            raise ValidationError(_('Date/Time is not in this format: YYYY-MM-DD HH:MM'))
         
         timediff = (valid.data - datetime.datetime.now()).total_seconds()
         if timediff <= 0:
-            raise ValidationError('Date/Time must be in the future!')
+            raise ValidationError(_('Date/Time must be in the future!'))
 
 
 
 class EditMessageForm(FlaskForm):
-    title = StringField('Message title', validators=[DataRequired()])
-    valid = DateTimeField('Starting date/time', format='%Y-%m-%d %H:%M')
+    title = StringField(_('Message title'), validators=[DataRequired()])
+    valid = DateTimeField(_('Starting date/time'), format='%Y-%m-%d %H:%M')
     severity = RadioField(
         #'Severity', choices=[(1, 'Information'), (2, 'Feature'), (3,'Problem'), (4, 'Outage')], 
-        'Severity', choices=[(1, severities[1]), (2, severities[2]), (3, severities[3]), (4, severities[4])], 
+        _('Severity'), choices=[(1, severities[1]), (2, severities[2]), (3, severities[3]), (4, severities[4])], 
         coerce=int, default=1, validators=[DataRequired()])
     label = SelectField(coerce=int)
-    send_email = BooleanField('Send email to ...', default=False)
-    email_body = TextAreaField('Email body', validators=[Optional(), Length(max=200)])
-    submit = SubmitField('Update')
+    send_email = BooleanField(_('Send email to ...'), default=False)
+    email_body = TextAreaField(_('Email body'), validators=[Optional(), Length(max=200)])
+    submit = SubmitField(_('Update'))
 
 
     def validate_valid(self, valid):
         if valid.data is None:
-            raise ValidationError('Date/Time is not in this format: YYYY-MM-DD HH:MM')
+            raise ValidationError(_('Date/Time is not in this format: YYYY-MM-DD HH:MM'))
         
         timediff = (valid.data - datetime.datetime.now()).total_seconds()
         if timediff <= 0:
-            raise ValidationError('Date/Time must be in the future!')
+            raise ValidationError(_('Date/Time must be in the future!'))
 
 
 
 class DeleteMessageForm(FlaskForm):
-    remove = SubmitField('Delete')
+    remove = SubmitField(_('Delete'))
 
 
 # ------------------------------------------------------------
@@ -138,18 +125,18 @@ class MultipleEmails(object):
 
 
 class AddEmailForm(FlaskForm):
-    name = StringField('Name of email group', validators=[DataRequired()])
-    email = StringField('Email address', validators=[DataRequired(), MultipleEmails()])
+    name = StringField(_('Name of email group'), validators=[DataRequired()])
+    email = StringField(_('Email address'), validators=[DataRequired(), MultipleEmails()])
 
-    submit = SubmitField('Submit')
+    submit = SubmitField(_('Submit'))
 
 
 class EditEmailForm(FlaskForm):
-    name = StringField('Name of email group', validators=[DataRequired()])
-    email = StringField('Email address', validators=[DataRequired(), MultipleEmails()])
+    name = StringField(_('Name of email group'), validators=[DataRequired()])
+    email = StringField(_('Email address'), validators=[DataRequired(), MultipleEmails()])
 
-    submit = SubmitField('Update')
+    submit = SubmitField(_('Update'))
 
 
 class DeleteEmailForm(FlaskForm):
-    remove = SubmitField('Delete')
+    remove = SubmitField(_('Delete'))
