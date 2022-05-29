@@ -5,7 +5,7 @@ app/main/routes.py
 ~~~~~~~~~~~~~~~~~~
 
 written by : Oliver Cordes 2022-03-29
-changed by : Oliver Cordes 2022-05-13
+changed by : Oliver Cordes 2022-05-29
 
 """
 
@@ -96,7 +96,7 @@ def show_labels():
     return render_template('main/labels.html',
                             labels=labels,
                             dform=dform,
-                            title='Labels'
+                            title=_('Labels')
     )
 
 
@@ -190,7 +190,7 @@ def show_messages():
     messages = Message.query.order_by(Message.valid).paginate(page, pagination.per_page, error_out=False).items
 
     return render_template('main/messages.html',
-                            title='Messages',
+                            title=_('Messages'),
                             dform=dform,
                             pagination=pagination,
                             messages=messages,
@@ -220,7 +220,7 @@ def message_add():
 
     
     return render_template('main/message_edit.html',
-                           title='Add message',
+                           title=_('Add message'),
                            edit=False,
                            nform=form,
                            )
@@ -256,7 +256,7 @@ def message_edit(id):
     form.email_body.data = msg.email_body
     
     return render_template('main/message_edit.html',
-                           title='Edit message',
+                           title=_('Edit message'),
                            edit=True,
                            nform=form,
                            )

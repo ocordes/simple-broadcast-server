@@ -3,7 +3,7 @@
 app/auth/forms.py
 
 written by: Oliver Cordes 2022-03-29
-changed by: Oliver Cordes 2021-04-07
+changed by: Oliver Cordes 2022-05-29
 
 """
 
@@ -22,6 +22,8 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Le
 from app.models import User
 
 from wtforms import widgets, SelectMultipleField
+
+from flask_babel import _
 
 class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=False)
