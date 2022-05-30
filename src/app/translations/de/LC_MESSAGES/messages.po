@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-05-29 16:14+0200\n"
+"POT-Creation-Date: 2022-05-30 16:16+0200\n"
 "PO-Revision-Date: 2022-05-13 15:07+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,6 +18,98 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
 
+#: app/auth/forms.py:35 app/auth/forms.py:44
+msgid "Username"
+msgstr "Benutzername"
+
+#: app/auth/forms.py:36 app/auth/forms.py:48 app/auth/forms.py:76
+#: app/auth/forms.py:89 app/auth/forms.py:96
+msgid "Password"
+msgstr "Passwort"
+
+#: app/auth/forms.py:38
+msgid "Remember me"
+msgstr "Erinnerung"
+
+#: app/auth/forms.py:39
+msgid "Login"
+msgstr "Login"
+
+#: app/auth/forms.py:45 app/auth/forms.py:66 app/auth/forms.py:84
+msgid "Email"
+msgstr "Email"
+
+#: app/auth/forms.py:46 app/auth/forms.py:67
+msgid "First name"
+msgstr "Vorname"
+
+#: app/auth/forms.py:47 app/auth/forms.py:68
+msgid "Last name"
+msgstr "Nachname"
+
+#: app/auth/forms.py:50 app/auth/forms.py:70 app/auth/forms.py:78
+#: app/auth/forms.py:91 app/auth/forms.py:98
+msgid "Repeated password"
+msgstr ""
+
+#: app/auth/forms.py:52 app/main/forms.py:37 app/main/forms.py:61
+#: app/main/forms.py:131
+msgid "Submit"
+msgstr "Senden"
+
+#: app/auth/forms.py:57
+msgid "Please use a different username."
+msgstr "Bitte einen anderen Benutzername wählen."
+
+#: app/auth/forms.py:62
+msgid "Please use a different email address."
+msgstr "Bitte eine andere Email-Adresse wählen."
+
+#: app/auth/forms.py:69
+msgid "New password"
+msgstr "Neues Passwort"
+
+#: app/auth/forms.py:71 app/main/forms.py:44 app/main/forms.py:84
+#: app/main/forms.py:138
+msgid "Update"
+msgstr "Aktualisieren"
+
+#: app/auth/forms.py:80
+msgid "Update Password"
+msgstr "Passwort aktualisieren"
+
+#: app/auth/forms.py:85
+msgid "Request password reset"
+msgstr "Ein Rücksetzen des Passwortes anfordern"
+
+#: app/auth/forms.py:92
+msgid "Reset password"
+msgstr "Passwort zurücksetzen"
+
+#: app/auth/forms.py:100
+msgid "Set admin password"
+msgstr "Admin-Passwort setzen"
+
+#: app/auth/forms.py:104
+msgid "Set Admin"
+msgstr "Setze Admin-Rechte"
+
+#: app/auth/forms.py:105
+msgid "Clear Admin"
+msgstr "Lösche Admin-Rechte"
+
+#: app/auth/forms.py:106
+msgid "Remove"
+msgstr "Löschen"
+
+#: app/auth/forms.py:111
+msgid "Send Email to:"
+msgstr "Sende Email an:"
+
+#: app/auth/forms.py:112
+msgid "Send Test Email"
+msgstr "Sende Test-Email"
+
 #: app/main/forms.py:34 app/main/forms.py:41
 msgid "Name"
 msgstr "Name"
@@ -25,14 +117,6 @@ msgstr "Name"
 #: app/main/forms.py:35 app/main/forms.py:42 app/templates/main/labels.html:26
 msgid "Description"
 msgstr "Beschreibung"
-
-#: app/main/forms.py:37 app/main/forms.py:61 app/main/forms.py:131
-msgid "Submit"
-msgstr "Senden"
-
-#: app/main/forms.py:44 app/main/forms.py:84 app/main/forms.py:138
-msgid "Update"
-msgstr "Aktualisieren"
 
 #: app/main/forms.py:48 app/main/forms.py:98 app/main/forms.py:142
 msgid "Delete"
@@ -74,7 +158,7 @@ msgstr "Name der Email-Gruppe"
 msgid "Email address"
 msgstr "Email-Adresse"
 
-#: app/main/routes.py:99 app/templates/app_base.html:111
+#: app/main/routes.py:99 app/templates/app_base.html:112
 msgid "Labels"
 msgstr "Markierungen"
 
@@ -86,7 +170,7 @@ msgstr "Erzeuge eine Markierung"
 msgid "Edit label"
 msgstr "Bearbeite eine Markierung"
 
-#: app/main/routes.py:193 app/templates/app_base.html:117
+#: app/main/routes.py:193 app/templates/app_base.html:118
 msgid "Messages"
 msgstr "Nachrichten"
 
@@ -98,23 +182,23 @@ msgstr "Füge eine Nachricht hinzu"
 msgid "Edit message"
 msgstr "Bearbeite Nachricht"
 
-#: app/templates/app_base.html:123
+#: app/templates/app_base.html:124
 msgid "Email groups"
 msgstr "Email-Gruppen"
 
-#: app/templates/app_base.html:128
+#: app/templates/app_base.html:129
 msgid "Administration"
 msgstr "Verwaltung"
 
-#: app/templates/app_base.html:136 app/templates/index.html:14
+#: app/templates/app_base.html:137 app/templates/index.html:14
 msgid "Users"
 msgstr "Benutzer"
 
-#: app/templates/app_base.html:141
+#: app/templates/app_base.html:142
 msgid "User"
 msgstr "Benutzer"
 
-#: app/templates/app_base.html:149
+#: app/templates/app_base.html:150
 msgid "Preferences"
 msgstr "Einstellungen"
 
@@ -141,4 +225,3 @@ msgstr "Liste der verfügbaren Markierungen"
 #: app/templates/main/labels.html:27
 msgid "Created"
 msgstr "Erstellt"
-
