@@ -11,6 +11,8 @@
 
 {% block styles %}
 {{super()}}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
     <link rel="stylesheet" href="{{url_for('static', filename='dashboard.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='sticky-footer.css')}}">
 
@@ -24,6 +26,26 @@
         {% if app_name %}{{app_name}}{%else%}Application{%endif%}
         </span>
       </a>
+      <!--
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <div class="dropdown">
+            <a class="btn  dropdown-toggle" href="#" role="button" id="dropdownLang" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              {# Languages #}
+              <span class="fi fi-{{flags[cur_lang]}}"></span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownLang">
+              {% for key, value in languages.items() %}
+              <li><a class="dropdown-item" href="{{url_for('main.set_language', id=key)}}""><span class=" fi
+                  fi-{{flags[key]}}"></span> {{value}}</a></li>
+              {% endfor %}
+            </ul>
+
+          </div>
+        </li>
+      </ul>
+    -->
     </nav>
 {% endblock %}
 
@@ -47,14 +69,14 @@
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 offset-md-2">
-              <!---
+              <!--
               <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                 <h1 class="h2">
                 {% if title %}{{ title }}{% else %}This page{% endif %}
                 </h1>
               </div>
             -->
-
+            
               {% with messages = get_flashed_messages() %}
               {% if messages %}
                   {% for message in messages %}

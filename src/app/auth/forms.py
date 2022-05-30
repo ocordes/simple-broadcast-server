@@ -23,7 +23,8 @@ from app.models import User
 
 from wtforms import widgets, SelectMultipleField
 
-from flask_babel import _
+from flask_babel import lazy_gettext as _
+
 
 class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=False)
@@ -31,81 +32,81 @@ class MultiCheckboxField(SelectMultipleField):
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()], render_kw={"autocomplete": "current-password"},
+    username = StringField(_('Username'), validators=[DataRequired()])
+    password = PasswordField(_('Password'), validators=[DataRequired()], render_kw={"autocomplete": "current-password"},
 )
-    remember_me = BooleanField('Remember me')
-    submit = SubmitField('Login')
+    remember_me = BooleanField(_('Remember me'))
+    submit = SubmitField(_('Login'))
 
 
 
 class NewUserForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    first_name = StringField('First name', validators=[DataRequired()])
-    last_name = StringField('Last name', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    username = StringField(_('Username'), validators=[DataRequired()])
+    email = StringField(_('Email'), validators=[DataRequired(), Email()])
+    first_name = StringField(_('First name'), validators=[DataRequired()])
+    last_name = StringField(_('Last name'), validators=[DataRequired()])
+    password = PasswordField(_('Password'), validators=[DataRequired()])
     password2 = PasswordField(
-        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+        _('Repeated password'), validators=[DataRequired(), EqualTo('password')])
 
-    submit = SubmitField('Submit')
+    submit = SubmitField(_('Submit'))
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
-            raise ValidationError('Please use a different username.')
+            raise ValidationError(_('Please use a different username.'))
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
-            raise ValidationError('Please use a different email address.')
+            raise ValidationError(_('Please use a different email address.'))
 
 
 class EditUserForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()], render_kw={"autocomplete": "email"})
-    first_name = StringField('First name', validators=[DataRequired()])
-    last_name = StringField('Last name', validators=[DataRequired()])
-    password = StringField('New password', widget=PasswordInput(hide_value=False), validators=[], render_kw={"autocomplete": "new-password"},)
-    password2 = StringField('Repeated password', widget=PasswordInput(hide_value=False), validators=[EqualTo('password')])
-    submit = SubmitField('Update')
+    email = StringField(_('Email'), validators=[DataRequired(), Email()], render_kw={"autocomplete": "email"})
+    first_name = StringField(_('First name'), validators=[DataRequired()])
+    last_name = StringField(_('Last name'), validators=[DataRequired()])
+    password = StringField(_('New password'), widget=PasswordInput(hide_value=False), validators=[], render_kw={"autocomplete": "new-password"},)
+    password2 = StringField(_('Repeated password'), widget=PasswordInput(hide_value=False), validators=[EqualTo('password')])
+    submit = SubmitField(_('Update'))
 
 
 
 class UpdatePasswordForm(FlaskForm):
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField(_('Password'), validators=[DataRequired()])
     password2 = PasswordField(
-        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+        _('Repeated password'), validators=[DataRequired(), EqualTo('password')])
 
-    submit = SubmitField('Update Password')
+    submit = SubmitField(_('Update Password'))
 
 
 class ResetPasswordRequestForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    submit = SubmitField('Request Password Reset')
+    email = StringField(_('Email'), validators=[DataRequired(), Email()])
+    submit = SubmitField(_('Request password reset'))
 
 
 class ResetPasswordForm(FlaskForm):
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField(_('Password'), validators=[DataRequired()])
     password2 = PasswordField(
-        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Reset Password')
+        _('Repeated password'), validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField(_('Reset password'))
 
 
 class AdminPasswordForm(FlaskForm):
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField(_('Password'), validators=[DataRequired()])
     password2 = PasswordField(
-        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+        _('Repeated password'), validators=[DataRequired(), EqualTo('password')])
 
-    submit = SubmitField('Set admin password')
+    submit = SubmitField(_('Set admin password'))
 
 
 class UserListForm(FlaskForm):
-    set_admin = SubmitField('Set Admin')
-    clear_admin = SubmitField('Clear Admin')
-    remove = SubmitField('Remove')
+    set_admin = SubmitField(_('Set Admin'))
+    clear_admin = SubmitField(_('Clear Admin'))
+    remove = SubmitField(_('Remove'))
 
 
 
 class PreferencesForm(FlaskForm):
-    test_email = StringField('Send Email to:', validators=[DataRequired(), Email()])
-    send_email = SubmitField('Send Test Email')
+    test_email = StringField(_('Send Email to:'), validators=[DataRequired(), Email()])
+    send_email = SubmitField(_('Send Test Email'))
