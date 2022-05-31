@@ -3,7 +3,7 @@
 app/models.py
 
 written by: Oliver Cordes 2022-03-29
-changed by: Oliver Cordes 2022-05-17
+changed by: Oliver Cordes 2022-05-31
 
 """
 
@@ -23,7 +23,7 @@ from datetime import datetime, timedelta
 from time import time
 import jwt
 
-
+from flask_babel import lazy_gettext as _
 
 severity_info    = 1   # green
 severity_feature = 2   # blue
@@ -32,11 +32,11 @@ severity_outage  = 4   # red
 
 
 severities = {
-            0 : 'Unknown',
-            1 : 'Information',
-            2 : 'Update',
-            3 : 'Problem',
-            4 : 'Outage',
+            0 : _('Unknown'),
+            1 : _('Information'),
+            2 : _('Update'),
+            3 : _('Problem'),
+            4 : _('Outage'),
 }
 
 sev_colors = {

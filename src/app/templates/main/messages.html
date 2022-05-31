@@ -12,7 +12,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h5>List of available messages</h5>
+        <h5>{{_('List of available messages')}}</h5>
     </div>
     <div class="card-body">
         <form id="rolesformdelete" class="form-horizontal mb-5" role="form" method="post" action="">
@@ -23,12 +23,12 @@
                     <thead>
                         <td></td>
                         <td>ID</td>
-                        <td>Title</td>
-                        <td>Due in</td>
-                        <td>Due</td>
-                        <td>Severity</td>
-                        <td>Label</td>
-                        <td>Created</td>
+                        <td>{{_('Title')}}</td>
+                        <td>{{_('Due in')}}</td>
+                        <td>{{_('Due')}}</td>
+                        <td>{{_('Severity')}}</td>
+                        <td>{{_('Label')}}</td>
+                        <td>{{_('Created')}}</td>
                         <td></td>
                     </thead>
                     {% for msg in messages %}
