@@ -55,7 +55,7 @@ class AddMessageForm(FlaskForm):
         #'Severity', choices=[(1, 'Information'), (2, 'Feature'), (3,'Problem'), (4, 'Outage')], 
         _('Severity'), choices=[(1, severities[1]), (2, severities[2]), (3, severities[3]), (4, severities[4])], 
         coerce=int, default=1, validators=[DataRequired()])
-    label = SelectField(coerce=int)
+    label = SelectField(_('Label'),coerce=int)
     send_email = BooleanField(_('Send email to ...'), default=False)
     email_body = TextAreaField(_('Email body'), validators=[Optional(), Length(max=200)])
     submit = SubmitField(_('Submit'))
@@ -78,7 +78,7 @@ class EditMessageForm(FlaskForm):
         #'Severity', choices=[(1, 'Information'), (2, 'Feature'), (3,'Problem'), (4, 'Outage')], 
         _('Severity'), choices=[(1, severities[1]), (2, severities[2]), (3, severities[3]), (4, severities[4])], 
         coerce=int, default=1, validators=[DataRequired()])
-    label = SelectField(coerce=int)
+    label = SelectField(_('Label'), coerce=int)
     send_email = BooleanField(_('Send email to ...'), default=False)
     email_body = TextAreaField(_('Email body'), validators=[Optional(), Length(max=200)])
     submit = SubmitField(_('Update'))

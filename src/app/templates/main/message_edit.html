@@ -33,7 +33,7 @@
                     {% else %}
                     {{nform.title(id="title", class_="form-control", placeholder="message title" ) }}
                     <label for="title">
-                        Message title
+                        {{nform.title.label()}}
                     </label>
                     {% endif %}
                 </div>
@@ -52,7 +52,7 @@
                     {% else %}
                     {{nform.valid(id="valid", class_="datetime form-control" , placeholder="YYYY-MM-DD HH:MM") }}
                     <label for="valid">
-                        Valid date
+                        {{nform.valid.label()}}
                     </label>
                     {% endif %}
                 </div>
@@ -68,20 +68,26 @@
                         {% endfor %}
                     </div>
                     <!--{{nform.severity(id="severity", class_="form-control") }}-->
-                    <label for="severity">Severity</label>
+                    <label for="severity">
+                        {{nform.severity.label()}}
+                    </label>
                 </div>
             </div>
 
             <div class="input-group mb-2">
                 <div class="form-floating flex-grow-1">
                     {{nform.label(id="label", class_="form-select", aria_label=".form-select-lg example")}}
-                    <label for="label">Label</label>
+                    <label for="label">
+                        {{nform.label.label()}}
+                    </label>
                  </div>
             </div>
 
             <div class="form-check form-switch">
                 {{nform.send_email(id="send_email", class_="form-check-input", onclick="toggleEmail()")}}
-                <label class="form-check-label" for="send_email">Send email to ... </label>
+                <label class="form-check-label" for="send_email">
+                    {{nform.send_email.label()}}
+                </label>
             </div>
 
             {% if nform.send_email.data == 1 %}
@@ -92,7 +98,9 @@
                 <div class="input-group mb-2">
                     <div class="form-floating flex-grow-1">
                         {{nform.email_body(id="email-body", class_="form-control", style="height: 500px")}}
-                        <label for="email-body">Email text</label>
+                        <label for="email-body">
+                            {{nform.email_body.label()}}
+                        </label>
                     </div>
                  </div>
             </div>
