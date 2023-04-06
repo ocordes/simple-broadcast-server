@@ -18,7 +18,7 @@ Flask-Migrate==4.0.0
 flask-paginate==2022.1.8
 Flask-SQLAlchemy==3.0.3
 Flask-WTF==1.0.1
-greenlet==2.0.1
+greenlet==2.0.2
 idna==3.4
 importlib-metadata==6.0.0
 itsdangerous==2.1.2
