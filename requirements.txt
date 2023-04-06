@@ -1,4 +1,4 @@
-alembic==1.10.2
+alembic==1.10.3
 Babel==2.12.1
 blinker==1.6
 Bootstrap-Flask==2.2.0
