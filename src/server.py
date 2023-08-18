@@ -4,13 +4,13 @@
 server.py
 
 written by: Oliver Cordes 2022-03-29
-changed by: Oliver Cordes 2022-05-28
+changed by: Oliver Cordes 2023-08-18
 
 """
 
 __author__    = 'Oliver Cordes'
 __version__   = '0.0.2'
-__copyright__ = f'2022 by {__author__}'
+__copyright__ = f'2022, 2023 by {__author__}'
 
 
 # used for the cli extension
@@ -68,23 +68,6 @@ def utility_processor():
 
 
 
-"""
-babel configurations
-
-"""
-
-@babel.localeselector
-def get_locale():
-    if request.args.get('language'):
-        session['language'] = request.args.get('language')
-    return session.get('language', 'en')
-
-
-@babel.timezoneselector
-def get_timezone():
-    user = getattr(g, 'user', None)
-    if user is not None:
-        return user.timezone
 
 
 # test this file

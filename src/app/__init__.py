@@ -3,7 +3,7 @@
 app/__init__.py
 
 written by: Oliver Cordes 2022-03-29
-changed by: Oliver Cordes 2022-03-29
+changed by: Oliver Cordes 2023-08-18
 
 """
 
@@ -14,7 +14,7 @@ from logging.handlers import SMTPHandler, RotatingFileHandler
 from config import Config
 
 
-from flask import Flask
+from flask import Flask, g, request, session
 from flask_bootstrap import Bootstrap5
 from flask_babel import Babel
 from flask_sqlalchemy import SQLAlchemy
@@ -23,6 +23,18 @@ from flask_login import LoginManager
 from flask_mail import Mail, email_dispatched
 from flask_debugtoolbar import DebugToolbarExtension
 
+
+def get_locale():
+    if request.args.get('language'):
+        session['language'] = request.args.get('language')
+    return session.get('language', 'en')
+
+
+
+def get_timezone():
+    user = getattr(g, 'user', None)
+    if user is not None:
+        return user.timezone
 
 
 # need to define this before migrate
@@ -62,7 +74,8 @@ def create_app(config_class=Config):
     mail.init_app(app)
     bootstrap.init_app(app)
     #moment.init_app(app.app)
-    babel.init_app(app)
+    #babel.init_app(app)
+    babel.init_app(app, locale_selector=get_locale, timezone_selector=get_timezone)
 
     toolbar.init_app(app)
 
