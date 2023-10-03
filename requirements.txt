@@ -4,7 +4,7 @@ blinker==1.6.2
 Bootstrap-Flask==2.3.0
 cffi==1.15.1
 click==8.1.7
-coverage==7.3.1
+coverage==7.3.2
 cryptography==41.0.4
 dnspython==2.4.2
 dominate==2.8.0
