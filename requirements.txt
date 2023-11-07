@@ -1,5 +1,5 @@
 alembic==1.11.3
-Babel==2.12.1
+Babel==2.13.1
 blinker==1.6.2
 Bootstrap-Flask==2.3.0
 cffi==1.16.0
