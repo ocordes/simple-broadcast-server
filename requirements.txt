@@ -1,6 +1,6 @@
 alembic==1.13.1
 Babel==2.14.0
-blinker==1.6.2
+blinker==1.7.0
 Bootstrap-Flask==2.3.0
 cffi==1.16.0
 click==8.1.7
